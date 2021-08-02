@@ -15,10 +15,7 @@ OO.mixinClass( PrefsWindow, DraggableMixin );
 
 PrefsWindow.static.name = "prefs";
 PrefsWindow.static.title = () => $("<span>").css({"font-weight":"normal"}).append(
-	$("<a>").css({"font-weight": "bold"}).attr({"href": mw.util.getUrl("WP:XFDC"), "target": "_blank"}).text("XFDcloser"),
-	" (",
-	$("<a>").attr({"href": mw.util.getUrl("WT:XFDC"), "target": "_blank"}).text("talk"),
-	") ",
+	$("<a>").css({"font-weight": "bold"}).attr({"href": mw.util.getUrl("WP:TBx-Manager"), "target": "_blank"}).text("TBx-Manager"),
 	$("<span>").css({"font-size":"90%"}).text("v"+appConfig.script.version)
 );
 PrefsWindow.static.size = "large";
@@ -26,19 +23,19 @@ PrefsWindow.static.actions = [
 	// Primary action (top right):
 	{
 		action: "savePrefs",
-		label: "Update",
+		label: "Opslaan",
 		flags: ["primary", "progressive"]
 	},
 	// Safe action (top left)
 	{
-		label: "Close",
+		label: "Annuleer",
 		flags: "safe"
 	},
 	// Other actions (bottom left)
 	{
 		action: "defaultPrefs",
-		label: "Restore defaults",
-		title: "Restore default preferences",
+		label: "Herstel standaard",
+		title: "Herstel standaard instellingen",
 		flags: "safe"
 	}
 ];

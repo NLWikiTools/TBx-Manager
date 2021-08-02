@@ -325,7 +325,7 @@ class TaskList {
 	}
 
 	setAborted() {
-		this.label = "Aborted";
+		this.label = "Afgebroken";
 		this.aborted = true;
 		this.emit("update");	}
 

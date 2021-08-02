@@ -1,20 +1,11 @@
-/*  _______________________________________________________________________________
- * |                                                                               |
- * |                     === WARNING: GLOBAL GADGET FILE ===                       |
- * |                   Changes to this page affect many users.                     |
- * |  Please discuss changes on the talk page or on [[WT:Gadget]] before editing.  |
- * |_______________________________________________________________________________|
- * 
- * Built from source code at GitHub repository [https://github.com/wikimedia-gadgets/xfdcloser]
- * All changes should be made in the repository, otherwise they will be lost.
- * 
- * To update this script from github, you must have a local repository set up. Then
- * follow the instructions at [https://github.com/wikimedia-gadgets/xfdcloser/blob/master/README.md]
- * 
- * XFDcloser: close deletion discussions at XfD venues, including actions to implement closes; see [[WP:XFDC]]
- * Author: Evad37
- * Licencing and attribution: [[WP:XFDC#Licencing and attribution]]
- */
-/* jshint esversion: 5, esnext:false, laxbreak: true, undef: true, eqnull: true, maxerr: 3000 */
-/* globals console, document, window, $, mw, OO */
 /* <nowiki> */
+
+/*****************************************************************************************************
+ * WARNING: This file is synced with a GitHub-repo. Please make any changes to this file over there. *
+ * Any local changes might be overwritten the next time this file is updated.                        *
+ *                                                                                                   *
+ * LET OP: Dit bestand is gekoppeld aan een GitHub-repo. Gelieve alle bewerkingen daar uitvoeren.    *
+ * Locale bewerkingen worden mogelijk overschreven bij de volgende update.                           *
+ *                                                                                                   *
+ * https://github.com/NLWikiTools/TBx-Manager                                                        *
+ *****************************************************************************************************/

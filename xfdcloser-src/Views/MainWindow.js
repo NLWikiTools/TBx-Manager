@@ -34,22 +34,22 @@ MainWindow.static.actions = [
 	},
 	{
 		action: "next",
-		label: "Next",
-		title: "Next",
+		label: "Volgende",
+		title: "Volgende",
 		flags: ["primary", "progressive"],
 		modes: ["normal", "multimodeAvailable", "multimodeActive"]
 	},
 	{
 		action: "save",
-		label: "Save",
-		title: "Close discussion and implement selected actions",
+		label: "Opslaan",
+		title: "Sluit de nominatie en voer acties uit",
 		flags: ["primary", "progressive"],
 		modes: ["relist", "basic", "options"]
 	},
 	{
 		action: "finish",
-		label: "Close",
-		title: "Close",
+		label: "Sluiten",
+		title: "Sluiten",
 		flags: ["primary", "progressive"],
 		modes: "tasks",
 		disabled: true
@@ -57,65 +57,65 @@ MainWindow.static.actions = [
 	// Safe actions (top left)
 	{
 		action: "closePrefs",
-		label: "Back",
+		label: "Terug",
 		flags: "safe",
 		modes: "prefs"
 	},
 	{
-		label: "Cancel",
-		title: "Cancel",
+		label: "Annuleren",
+		title: "Annuleren",
 		flags: "safe",
 		modes: ["normal", "relist", "basic", "multimodeAvailable", "multimodeActive"]
 	},
 	{
 		action: "back",
-		label: "Back",
-		title: "Back",
+		label: "Terug",
+		title: "Terug",
 		flags: "safe",
 		modes: "options"
 	},
 	{
 		action: "abort",
-		label: "Abort",
-		title: "Abort",
+		label: "Afbreken",
+		title: "Afbreken",
 		flags: ["safe", "destructive"],
 		modes: "tasks"
 	},
 	// Other actions (bottom left)
 	{
 		action: "showPrefs",
-		label: "Preferences",
-		title: "Preferences",
+		label: "Voorkeuren",
+		title: "Voorkeuren",
 		icon: "settings",
 		flags: "safe",
 		modes: ["normal", "relist", "basic", "multimodeAvailable", "multimodeActive"]
 	},
 	{
 		action: "defaultPrefs",
-		label: "Restore defaults",
-		title: "Restore default preferences",
+		label: "Herstel standaard",
+		title: "Herstel standaard voorkeuren",
 		flags: "safe",
 		modes: "prefs"
 	},
 	{
 		action: "multimode",
-		label: "Multiple results...",
+		label: "Meerdere uitkomsten...",
 		modes: ["multimodeAvailable"]
 	},
 	{
 		action: "singlemode",
-		label: "Single result...",
+		label: "Enkele uitkomst...",
 		modes: ["multimodeActive"]
 	}
 ];
 
 MainWindow.prototype.setErrorsLabels = function(labels) {
 	labels = labels || {};
-	this.$errorsTitle.text(labels.title || "Something went wrong...");
+	this.$errorsTitle.text(labels.title || "Er ging iets fout...");
 	// Allow the "dismiss" action label to be changed to be more inituitive.
 	// E.g. for recoverable warnings, it is not obvious that "dismiss" will
 	// halt the process (rather than dismiss the warning).
-	this.dismissButton.setLabel(labels.dismiss || "Dismiss");
+	this.dismissButton.setLabel(labels.dismiss || "Negeer");
 };
 
 // Customize the initialize() function: This is where to add content not dependant on data passed at time of opening

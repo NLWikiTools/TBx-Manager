@@ -8,9 +8,7 @@ import DiscussionView from "./Views/DiscussionView";
 (function App() {
 	// Quick checks that script should be running
 	if (
-		!config.mw.wgUserGroups.includes("extendedconfirmed") &&
-		!config.mw.wgUserGroups.includes("sysop") &&
-		config.mw.wgDBname !== "testwiki"
+		!config.mw.wgUserGroups.includes("sysop")
 	) {
 		// User is not extendedconfirmed, nor sysop, nor on testwiki
 		return;
@@ -25,7 +23,7 @@ import DiscussionView from "./Views/DiscussionView";
 	});
 
 	// Preferences portlet link
-	mw.util.addPortletLink("p-cactions", "#", "XFDC prefs", "p-xfdc-prefs", "XFDcloser preferences");
+	mw.util.addPortletLink("p-cactions", "#", "TBx-M config", "p-xfdc-prefs", "TBx-Manager instellingen");
 	$("#p-xfdc-prefs").click(e => {
 		e.preventDefault();
 		windowSetManager.openWindow("prefs", {
@@ -35,7 +33,7 @@ import DiscussionView from "./Views/DiscussionView";
 
 	// Unlink portlet link: non-existant pages only
 	if ( config.mw.wgArticleId === 0 ) {
-		mw.util.addPortletLink("p-cactions", "#", "XFDC Unlink", "p-xfdc-unlink", "Unlink backlinks using XFDcloser");
+		mw.util.addPortletLink("p-cactions", "#", "TBx-M Ontlink", "p-xfdc-unlink", "Ontlinken met TBx-Manager");
 		$("#p-xfdc-unlink").click(e => {
 			e.preventDefault();
 			// Try to find the deletion log comment
@@ -57,7 +55,7 @@ import DiscussionView from "./Views/DiscussionView";
 					}
 				}
 				comment = comment
-					.replace(/ \(\[\[Wikipedia:XFDC(#[\d.]+)?|XFDcloser]]\)/, "")
+					.replace(/ \(\[\[Wikipedia:TBx-Manager(#[\d.]+)?|TBx-Manager]]\)/, "")
 					.slice(1,-1);
 			}
 			windowSetManager.openWindow("unlink", {
@@ -88,7 +86,7 @@ import DiscussionView from "./Views/DiscussionView";
 					}
 					//discussionView.fixButtonMenuWidth();
 				} catch(e) {
-					console.warn("[XFDcloser] Could not retrieve page info for " + $(this).text(), e);
+					console.warn("[TBx-Manager] Kon pagina-info niet ophalen voor " + $(this).text(), e);
 				}
 			});
 

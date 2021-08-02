@@ -2,7 +2,6 @@ import { OO } from "../../globals";
 import AddBeingDeleted from "../Controllers/Tasks/AddBeingDeleted";
 import AddMergeTemplates from "../Controllers/Tasks/AddMergeTemplates";
 import AddOldXfd from "../Controllers/Tasks/AddOldXfd";
-import AddToHoldingCell from "../Controllers/Tasks/AddToHoldingCell";
 import CloseDiscussion from "../Controllers/Tasks/CloseDiscussion";
 import DeletePages from "../Controllers/Tasks/DeletePages";
 import DeleteRedirects from "../Controllers/Tasks/DeleteRedirects";
@@ -21,7 +20,7 @@ import UpdateOldLogPage from "../Controllers/Tasks/UpdateOldLogPage";
 // <nowiki>
 
 const controllers = {
-	AddBeingDeleted, AddMergeTemplates, AddOldXfd, AddToHoldingCell, CloseDiscussion, DeletePages,
+	AddBeingDeleted, AddMergeTemplates, AddOldXfd, CloseDiscussion, DeletePages,
 	DeleteRedirects, DeleteTalkpages, Disambiguate, GetRelistInfo, Redirect, RemoveCircularLinks,
 	RemoveNomTemplates,	TagTalkWithSpeedy, UnlinkBacklinks, UpdateDiscussion, UpdateNewLogPage,
 	UpdateNomTemplates, UpdateOldLogPage
@@ -46,11 +45,11 @@ function TaskItemWidget(model) {
 	});
 	this.$element.find(".oo-ui-fieldLayout-messages").css("clear","both");
 	this.showAllWarningsButton = new OO.ui.ButtonWidget({
-		label: "Show warnings",
+		label: "Toon waarschuwingen",
 		icon: "alert"
 	});
 	this.showAllErrorsButton = new OO.ui.ButtonWidget({
-		label: "Show errors",
+		label: "Toon fouten",
 		icon: "error",
 		flags: "destructive"
 	});

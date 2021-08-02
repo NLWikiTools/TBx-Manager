@@ -6,7 +6,7 @@ import { rejection, makeLink } from "../../util";
 export default class TagTalkWithSpeedy extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName(`Tagging talk ${model.pageNames.length > 1 ? "pages" : "page"}`);
+		this.model.setName(`Nomineren overleg${model.pageNames.length > 1 ? "pagina's" : "pagina"}`);
 	}
 
 	verifyPage(pageName) {
@@ -14,14 +14,14 @@ export default class TagTalkWithSpeedy extends TaskItemController {
 		const isUserTalkBasePage = title.getNamespaceId() === 3 && !pageName.includes("/");
 		if ( !title.exists() ) {
 			this.model.addWarning(
-				`${makeLink(pageName)} skipped: does not exist (may have already been deleted by others)`
+				`${makeLink(pageName)} overgeslagen: pagina bestaat niet (mogelijk is hij al verwijderd)`
 			);
 			this.model.trackStep("skipped");
 			return false;
 		}
 		if ( isUserTalkBasePage ) {
 			this.model.addWarning(
-				`${makeLink(pageName)} skipped: base user talk page (not eligible for G8 speedy deletion)`
+				`${makeLink(pageName)} overgeslagen: gebruikersoverlegpagina's kunnen niet met TBx-Manager verwijderd worden`
 			);
 			this.model.trackStep("skipped");
 			return false;
@@ -32,8 +32,8 @@ export default class TagTalkWithSpeedy extends TaskItemController {
 	transform(/* page */) {
 		if ( this.aborted ) return rejection("aborted");
 		return {
-			prependtext: "{{Db-talk}}\n",
-			summary: this.model.getEditSummary({short:true, prefix: "[[WP:G8|G8]] Speedy deletion nomination, per"}),
+			prependtext: "{{nuweg|1=Weesoverlegpagina}}\n",
+			summary: this.model.getEditSummary({short:true, prefix: "Verzoek om directe verwijdering, per"}),
 			nocreate: 1
 		};
 	}
@@ -41,7 +41,7 @@ export default class TagTalkWithSpeedy extends TaskItemController {
 	doTask() {
 		const talkPages = this.model.getResolvedTalkpagesNames();
 		if ( talkPages.length === 0 ) {
-			this.model.addWarning("None found");
+			this.model.addWarning("Niet gevonden");
 			return rejection();
 		}
 		this.model.setTotalSteps(talkPages.length);

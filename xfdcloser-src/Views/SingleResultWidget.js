@@ -3,7 +3,7 @@ import SingleResultWidgetController from "../Controllers/SingleResultWidgetContr
 // <nowiki>
 
 /**
- * 
+ *
  * @param {ResultItem} model
  * @param {Object} config
  * @param {JQuery} config.$overlay
@@ -20,7 +20,7 @@ function SingleResultWidget(model, config) {
 	this.buttonSelect = new OO.ui.ButtonSelectWidget();
 	this.speedyOption = new OO.ui.CheckboxMultioptionWidget( {
 		data: {name:"speedy", prefix: "speedy "},
-		label: "Speedy"
+		label: "Direct"
 	} );
 	this.softOption = new OO.ui.CheckboxMultioptionWidget( {
 		data: {name:"soft", prefix: "soft "},
@@ -28,7 +28,7 @@ function SingleResultWidget(model, config) {
 	} );
 	this.deleteFirstOption = new OO.ui.CheckboxMultioptionWidget( {
 		data: {name:"deleteFirst", prefix: "delete and "},
-		label: "Delete first"
+		label: "Eerst verwijderen"
 	} );
 	this.optionsMultiselect = new OO.ui.CheckboxMultiselectWidget( {
 		items: [
@@ -43,7 +43,7 @@ function SingleResultWidget(model, config) {
 		"padding":"4px 0"
 	});
 	this.targetInput = new OO.ui.TextInputWidget( {
-		label: "to:",
+		label: "naar:",
 		labelPosition: "before",
 		classes: ["padLeft2em"],
 		validate: function(val) {
@@ -51,7 +51,7 @@ function SingleResultWidget(model, config) {
 		}
 	} );
 	this.customResultInput = new OO.ui.TextInputWidget( {
-		label: "Result:",
+		label: "Uitkomst:",
 		labelPosition: "before",
 		classes: ["padLeft4em"],
 		validate: "non-empty"

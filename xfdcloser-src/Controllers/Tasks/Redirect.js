@@ -13,8 +13,8 @@ import { rejection, isModule, makeLink, uniqueArray, normalisePageName } from ".
  */
 class Redirection {
 	/**
-	 * 
-	 * @param {Object} config 
+	 *
+	 * @param {Object} config
 	 *  @param {String} config.from Name of page to be redirected
 	 *  @param {String} config.to Name of target page
 	 *  @param {Boolean} config.deleteFirst Delete before redirecting
@@ -38,8 +38,8 @@ export default class Redirect extends TaskItemController {
 		const plural = this.model.pageNames.length > 1;
 		const deleteFirst = this.redirections.find(redirection => redirection.deleteFirst);
 		const label = deleteFirst
-			? `Deleting ${plural ? "pages" : "page"} and replacing with ${plural ? "redirects" : "redirect"}`
-			: `Replacing ${plural ? "pages" : "page"} with ${plural ? "redirects" : "redirect"}`;
+			? `Verwijder ${plural ? "pagina's" : "pagina"} en vervang het met ${plural ? "doorverwijzingen" : "een doorverwijzing"}`
+			: `Vervang ${plural ? "pagina's" : "pagina"} met ${plural ? "doorverwijzingen" : "een doorverwijzing"}`;
 		this.model.setName(label);
 	}
 
@@ -62,7 +62,7 @@ export default class Redirect extends TaskItemController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {Redirection} redirection
 	 * @returns {Object<string,string>} {text, summary}
 	 */
@@ -70,18 +70,15 @@ export default class Redirect extends TaskItemController {
 		if ( this.aborted && !redirection.deleteFirst ) return rejection("aborted");
 
 		let text;
-		const rcatshell = redirection.rcats && redirection.rcats.length
-			? `\n\n{{Rcat shell|\n${redirection.rcats.join("\n")}\n}}`
-			: "";
 		if ( isModule(redirection.from) ) {
 			if ( !isModule(redirection.to)) {
 				return rejection("targetIsNotModule", {target: redirection.to});
 			}
 			text = `return require( "${redirection.to}" )`;
 		} else if ( redirection.isSoft ) {
-			text = `{{Soft redirect|${redirection.to}}}${rcatshell}`;
+			text = `{{Softredirect|${redirection.to}}}`;
 		} else {
-			text = `#REDIRECT [[${redirection.to}]]${rcatshell}`;
+			text = `#Doorverwijzing [[${redirection.to}]]`;
 		}
 		return {
 			text,
@@ -90,8 +87,8 @@ export default class Redirect extends TaskItemController {
 	}
 
 	/**
-	 * 
-	 * @param {Redirection} redirection 
+	 *
+	 * @param {Redirection} redirection
 	 * @returns {Promise} resolved if page was redirected
 	 */
 	redirect(redirection) {
@@ -112,8 +109,8 @@ export default class Redirect extends TaskItemController {
 	}
 
 	/**
-	 * 
-	 * @param {Redirection} redirection 
+	 *
+	 * @param {Redirection} redirection
 	 * @returns {Promise} resolved if page was deleted and redirected
 	 */
 	deleteAndRedirect(redirection) {

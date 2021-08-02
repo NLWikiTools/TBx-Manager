@@ -6,7 +6,7 @@ import { makeLink, rejection } from "../../util";
 export default class DeletePages extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName(`Deleting ${model.pageNames.length > 1 ? "pages" : "page"}`);
+		this.model.setName(`Verwijderen ${model.pageNames.length > 1 ? "pagina's" : "pagina"}`);
 	}
 
 	/**
@@ -17,7 +17,7 @@ export default class DeletePages extends TaskItemController {
 	verifyPage(pageName) {
 		if ( !mw.Title.newFromText(pageName).exists() ) {
 			this.model.addWarning(
-				`${makeLink(pageName)} skipped: does not exist (may have already been deleted by others)`
+				`${makeLink(pageName)} overgeslagen: pagina bestaat niet (mogelijk is hij al verwijderd)`
 			);
 			this.model.trackStep("failed");
 			return false;

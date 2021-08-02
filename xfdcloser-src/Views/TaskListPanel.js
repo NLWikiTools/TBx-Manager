@@ -10,7 +10,7 @@ function TaskListPanel( config, model ) {
 
 	this.model = model;
 
-	this.fieldset = new OO.ui.FieldsetLayout({label: "Tasks"});
+	this.fieldset = new OO.ui.FieldsetLayout({label: "Taken"});
 	this.$element.append(this.fieldset.$element);
 
 	this.controller = new TaskListPanelController(this.model, this);

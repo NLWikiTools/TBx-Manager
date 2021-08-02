@@ -160,7 +160,7 @@ export default function unlink(wikitext, unlinkThese, ns, isDab) {
 		);
 		
 		// Remove any "See also" sections that are now empty
-		var seeAlsoSection = /(==+)\s*[Ss]ee [Aa]lso\s*==+([.\n]*?)(?:(==+)|$)/g.exec(wikitext);
+		var seeAlsoSection = /(==+)\s*[Zz]ie [Oo]ok\s*==+([.\n]*?)(?:(==+)|$)/g.exec(wikitext);
 		if ( seeAlsoSection ) {
 			var hasSubsection = seeAlsoSection[1] && seeAlsoSection[3] && seeAlsoSection[3].length > seeAlsoSection[1].length;
 			var isEmpty = seeAlsoSection[2].trim() === "";

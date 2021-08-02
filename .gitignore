@@ -1,7 +1,28 @@
-node_modules
 # ignore builds - can be recreated by running `npm run build`
 dist/*
 # ignore globals.js - built during building and/or testing
 globals.js
 # ignore credentials used for deployment
 credentials.json
+
+# Idea
+.idea
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Node
+node_modules/
+npm-debug.log*

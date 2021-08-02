@@ -13,9 +13,9 @@ export default class AddBeingDeleted extends TaskItemController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {Object} page API page object
-	 * @returns {Object|Promise} edit parameters for API.editWithRetry, or promise rejected with an error code 
+	 * @returns {Object|Promise} edit parameters for API.editWithRetry, or promise rejected with an error code
 	 */
 	transform(page) {
 		if ( this.model.aborted ) {
@@ -35,7 +35,7 @@ export default class AddBeingDeleted extends TaskItemController {
 		if ( !options ) {
 			return rejection("couldNotUpdate", "Internal error: could not find options for result");
 		}
-		
+
 		const holdcellsection = options.holdcellSection || options.holdcellMergeSection;
 
 		// Replace or remove TfD nomination template (which may or may not be noincluded)
@@ -53,7 +53,7 @@ export default class AddBeingDeleted extends TaskItemController {
 				return {
 					text: `<${inclusionTag}>{{Db-xfd|fullvotepage=${this.model.discussion.discussionPageLink}}}</${inclusionTag}>` +
 						this.model.venue.removeNomTemplate(oldWikitext),
-					summary: this.model.getEditSummary({short: true, prefix: "[[WP:G6|G6]] Speedy deletion nomination, per"})
+					summary: this.model.getEditSummary({short: true, prefix: "Direct verwijderd per, per"})
 				};
 			} else {
 				// Add Being deleted template, remove nom template

@@ -15,7 +15,7 @@ export default class CloseDiscussion extends TaskItemController {
 	 * the API, and it works for the vast majority of cases: mostly plain
 	 * text, sometimes with links, tl templates, multiple spaces, and/or
 	 * HTML-encoded entities.
-	 * 
+	 *
 	 * @param {String} wikitext
 	 * @returns {String} plain text
 	 */
@@ -35,27 +35,29 @@ export default class CloseDiscussion extends TaskItemController {
 
 		// Check if already closed
 		if ( page.content.includes(this.model.venue.wikitext.alreadyClosed) ) {
-			this.model.addError("Discussion already closed (reload page to see the close)");
+			this.model.addError("Nominatie afgehandeld (herlaad pagina om resultaat te zien)");
 			return rejection("abort");
 		}
 		// Check for edit conflict based on start time (only possible for venues with individual subpages)
 		if ( this.model.venue.hasIndividualSubpages && config.startTime < new Date(page.revisions[0].timestamp) ) {
-			this.model.addError("Edit conflict detected");
+			this.model.addError("Bewerkingsconflict gedetecteerd");
 			return rejection("abort");
 		}
 		// Check for possible edit conflict based on section heading
 		const section_heading = page.content.slice(0, page.content.indexOf("\n"));
 		const sectionHeadingText = CloseDiscussion.sectionHeadingText(section_heading);
 		if ( sectionHeadingText !== this.model.discussion.sectionHeader ) {
-			this.model.addError(`Possible edit conflict detected, found section heading"${sectionHeadingText}"`);
+			this.model.addError(`Mogelijk bewerkingsconflict gedetecteerd, sectie gevonden: "${sectionHeadingText}"`);
 			return rejection("abort");
 		}
 
 		const xfd_close_top = this.model.venue.wikitext.closeTop
+			.slice(page.content.indexOf("{{einde}}"));
+		const xfd_close_bottom = this.model.venue.wikitext.closeBottom
 			.replace(/__RESULT__/, this.model.result.getResultText() || "&thinsp;")
-			.replace(/__TO_TARGET__/, this.model.result.getFormattedTarget({prepend: " to "}))
+			.replace(/__TO_TARGET__/, this.model.result.getFormattedTarget({prepend: " naar "}))
 			.replace(/__RATIONALE__/, this.model.result.getFormattedRationale("punctuated") || ".")
-			.replace(/__SIG__/, config.user.sig);
+			.slice(page.content.indexOf("{{su}}"));
 		const section_content = page.content
 			.slice(page.content.indexOf("\n") + 1)
 			.replace(
@@ -64,12 +66,12 @@ export default class CloseDiscussion extends TaskItemController {
 		const updated_top = this.model.venue.hasIndividualSubpages
 			? xfd_close_top + "\n" + section_heading
 			: section_heading + "\n" + xfd_close_top;
-		const updated_section = updated_top + "\n" + section_content.trim() + "\n" + this.model.venue.wikitext.closeBottom;
+		const updated_section = updated_top + section_content.trim() + "\n" + xfd_close_bottom;
 
 		return {
 			section: this.model.discussion.sectionNumber,
 			text: updated_section,
-			summary: `/* ${this.model.discussion.sectionHeader} */ Closed as ${this.model.result.getResultText()} ${config.script.advert}`
+			summary: `/* ${this.model.discussion.sectionHeader} */ Afgehandeld als ${this.model.result.getResultText()} ${config.script.advert}`
 		};
 	}
 

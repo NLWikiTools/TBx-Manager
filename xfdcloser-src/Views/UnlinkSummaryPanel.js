@@ -13,11 +13,11 @@ function UnlinkSummaryPanel(config, model) {
 	this.summaryInput = new OO.ui.TextInputWidget();
 	this.summaryPreview = new OO.ui.LabelWidget({classes: ["xu-preview"]});
 	this.summaryInputField = new OO.ui.FieldLayout( this.summaryInput, { 
-		label: "Enter the reason for link removal", 
+		label: "Geef reden voor ontlinken",
 		align: "top" 
 	} );
 	this.summaryPreviewField = new OO.ui.FieldLayout( this.summaryPreview, { 
-		label: "Edit summary preview:", 
+		label: "Voorvertoning bewerkingssamenvatting:",
 		align: "top" 
 	} );
 

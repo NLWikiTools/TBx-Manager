@@ -6,11 +6,11 @@ import config from "../../config";
 export default class UpdateNewLogPage extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName(`Updating link in nomination ${model.discussion.pages.length > 1 ? "templates" : "template"}`);
+		this.model.setName(`Link in nominatie-${model.discussion.pages.length > 1 ? "sjablonen" : "sjabloon"} bijwerken`);
 	}
 
 	transform(page) {
-		if ( this.aborted ) return rejection("Aborted");
+		if ( this.aborted ) return rejection("aborted");
 
 		// Check there's a corresponding nominated page
 		const pageName = this.model.getResolvedPageNames().find(pagename => pagename === docToModule(page.title));
@@ -37,12 +37,12 @@ export default class UpdateNewLogPage extends TaskItemController {
 		
 		return {
 			text: updatedWikitext,
-			summary: `Updating ${this.model.venue.type.toUpperCase()} template: discussion was relisted ${config.script.advert}`
+			summary: `Bijwerken ${this.model.venue.type.toUpperCase()}-sjabloon: nominatie is verlengt ${config.script.advert}`
 		};
 	}
 
 	doTask() {
-		if ( this.aborted ) return rejection("Aborted");
+		if ( this.aborted ) return rejection("aborted");
 
 		const pageNames = this.model.getResolvedPageNames().map(moduleToDoc);
 		this.model.setTotalSteps(pageNames.length);

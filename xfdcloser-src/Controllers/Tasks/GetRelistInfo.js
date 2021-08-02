@@ -60,7 +60,7 @@ export default class RelistInfo extends TaskItemController {
 		case "afd":
 			// Update link to log page
 			newWikitext = newWikitext.replace(
-				/\[\[Wikipedia:Articles for deletion\/Log\/\d{4} \w+ \d{1,2}#/,
+				/\[\[Wikipedia:Te beoordelen pagina's\/\d{4} \w+ \d{1,2}#/,
 				"[[" + this.todaysLogpage + "#"
 			);
 			break;

@@ -6,7 +6,7 @@ import { rejection, makeLink } from "../../util";
 export default class DeleteTalkpages extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName(`Deleting talk ${model.pageNames.length > 1 ? "pages" : "page"}`);
+		this.model.setName(`Verwijderen overleg${model.pageNames.length > 1 ? "pagina's" : "pagina"}`);
 	}
 
 	/**
@@ -20,13 +20,13 @@ export default class DeleteTalkpages extends TaskItemController {
 
 		if ( !title.exists() ) {
 			this.model.addWarning(
-				`${makeLink(pageName)} skipped: does not exist (may have already been deleted by others)`
+				`${makeLink(pageName)} overgeslagen: pagina bestaat niet (mogelijk is hij al verwijderd)`
 			);
 			this.model.trackStep("skipped");
 			return false;
 		} else if ( isUserTalkBasePage ) {
 			this.model.addWarning(
-				`${makeLink(pageName)} skipped: base user talk page (not eligible for G8 speedy deletion)`
+				`${makeLink(pageName)} overgeslagen: gebruikersoverlegpagina's kunnen niet met TBx-Manager verwijderd worden`
 			);
 			this.model.trackStep("skipped");
 			return false;
@@ -37,7 +37,7 @@ export default class DeleteTalkpages extends TaskItemController {
 	doTask() {
 		const talkPages = this.model.getResolvedTalkpagesNames();
 		if ( talkPages.length === 0 ) {
-			this.model.addWarning("None found");
+			this.model.addWarning("Niet gevonden");
 			return rejection();
 		}
 		this.model.setTotalSteps(talkPages.length);
@@ -46,7 +46,7 @@ export default class DeleteTalkpages extends TaskItemController {
 		this.model.setDoing();
 		return this.api.deleteWithRetry(
 			talkPagesToDelete,
-			{ reason: this.model.getEditSummary({prefix: "[[WP:G8|G8]]:"}) },
+			{ reason: this.model.getEditSummary({prefix: ""}) },
 			() => this.model.trackStep(),
 			(code, error, title) => this.handlePageError(code, error, title, "delete")
 		).catch(

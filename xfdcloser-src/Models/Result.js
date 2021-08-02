@@ -33,7 +33,7 @@ function makeLink(target, text) {
 class Result {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param {Object} config
 	 *  @param {Discussion} config.discussion
 	 *  @param {String} config.type "close" or "relist"
@@ -59,7 +59,7 @@ class Result {
 
 		this.resultSummary = "";
 		this.isMultimode = false;
-		
+
 		this.rationale = "";
 		this.newSentence = true;
 
@@ -67,31 +67,19 @@ class Result {
 		if ( this.discussion.pages.length === 0 ) {
 			this.topNotes.push({
 				name: "basicMode",
-				title: `Discussion: ${this.discussion.sectionHeader} (basic mode only)`,
-				content: "Nominated pages were not detected.",
+				title: `Nominatie: ${this.discussion.sectionHeader} (alleen basismodus)`,
+				content: "Geen genomineerde pagina's gedetecteerd.",
 				expanded: false
 			});
 		} else {
 			const pageCount = this.discussion.pages.length === 1 ? "1 page" : `${this.discussion.pages.length} pages`;
 			this.topNotes.push({
 				name: "discussionPages",
-				title: `Discussion: ${this.discussion.sectionHeader} (${pageCount})`,
+				title: `Nominatie: ${this.discussion.sectionHeader} (${pageCount})`,
 				content: $("<ul>").append(
 					this.discussion.pagesNames.map(
 						pageName => $("<li>").append(makeLink(pageName))
 					)
-				),
-				expanded: false
-			});
-		}
-		if ( !this.userIsSysop && this.type === "close" ) {
-			this.topNotes.push({
-				name: "nonAdminWarning",
-				title: "Take care to avoid inappropriate non-administrator closes",
-				content: $("<span>").append(
-					"See the ",
-					makeLink("WP:NACD"),
-					" guideline for advice on appropriate and inappropriate closures."
 				),
 				expanded: false
 			});
@@ -146,7 +134,7 @@ class Result {
 	 * @param {Boolean} rationaleHeading
 	 */
 	get rationaleHeading() {
-		return this.type === "close" ? "Rationale" : "Relist comment";
+		return this.type === "close" ? "Conclusie" : "Verlengingsreden";
 	}
 
 	/**
@@ -176,22 +164,18 @@ class Result {
 	 * @param {String} previewWikitext
 	 */
 	get previewWikitext() {
-		if (this.type === "relist") {
-			return `{{Relist|1=${this.getRelistComment()}}}`;
-		} else { 
-			const resultText = this.isMultimode ? this.resultSummary.trim() : this.singleModeResult.getResultText();
-			const resultWikitext = resultText ? `'''${resultText}'''` : "";
-			const targetWikitext = this.getFormattedTarget({prepend: " to "});
-			const rationaleWikitext = this.getFormattedRationale("punctuated") || ".";
-			return `The result of the discussion was ${resultWikitext}${targetWikitext}${rationaleWikitext}`;
-		}
+		const resultText = this.isMultimode ? this.resultSummary.trim() : this.singleModeResult.getResultText();
+		const resultWikitext = resultText ? `'''${resultText}'''` : "";
+		const targetWikitext = this.getFormattedTarget({prepend: " naar "});
+		const rationaleWikitext = this.getFormattedRationale("punctuated") || ".";
+		return `${resultWikitext}${targetWikitext}${rationaleWikitext}`;
 	}
 
 	/**
 	 * Trimmed rationale. For "punctuated" format, prepended with a period
 	 * and/or linebreak, if required. For "escaped" format, pipes are escaped,
 	 * except within templates and wikilinks.
-	 * 
+	 *
 	 * @param {string} [format] "punctuated" or "escaped"
 	 */
 	getFormattedRationale(format) {
@@ -207,7 +191,7 @@ class Result {
 		}
 		return ( needsLinebreak ? "\n" : "" ) + ( format === "escaped"
 			? text.replace(/(\|)(?!(?:[^[]*]|[^{]*}))/g, "&#124;")
-			: text 
+			: text
 		);
 	}
 	getRelistComment() {
@@ -248,7 +232,7 @@ class Result {
 	setNoteExpanded(noteName, isExpanded) {
 		const noteIndex = this.topNotes.findIndex(note => note.name === noteName);
 		if ( noteIndex === -1 ) {
-			throw new Error(`Note ${noteName} not found`);
+			throw new Error(`Note ${noteName} niet gevonden`);
 		}
 		this.topNotes = [
 			...this.topNotes.slice(0, noteIndex),
@@ -278,7 +262,7 @@ class Result {
 				return  `*''' ''' ${pageLink}\n`;
 			}
 			const formattedTarget = result.showTarget && ( result.getFormattedTarget() || "[[]]" );
-			return `*'''${resultText}''' ${pageLink}${formattedTarget ? " to " + formattedTarget : ""}\n`;
+			return `*'''${resultText}''' ${pageLink}${formattedTarget ? " naar " + formattedTarget : ""}\n`;
 		}).join("");
 		this.rationale = results + this.rationale;
 		this.emit("update");

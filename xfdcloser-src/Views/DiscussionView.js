@@ -3,11 +3,10 @@ import DiscussionViewController from "../Controllers/DiscussionViewController";
 import { getRelevantResults } from "../data";
 import Discussion from "../Models/Discussion";
 import { dateFromSigTimestamp, dateFromParts } from "../util";
-import * as prefs from "../prefs";
 // <nowiki>
 
 function xfdcActionLabel(label) {
-	// TODO: Once beta testing is completed, the styles should be in styles.css rather than here 
+	// TODO: Once beta testing is completed, the styles should be in styles.css rather than here
 	return new OO.ui.HtmlSnippet(`<span class="xfdc-action" style="margin:0;">[<a>${label}</a>]</span>`);
 }
 
@@ -25,7 +24,7 @@ const calculatedButtonMenuWidth = (function() {
 })();
 
 /**
- * 
+ *
  * @param {Discussion} model
  */
 function DiscussionView(model) {
@@ -40,45 +39,42 @@ function DiscussionView(model) {
 
 	this.closeButton = new OO.ui.ButtonWidget({
 		framed: false,
-		label: xfdcActionLabel("Close"),
-		title: "Close discussion...",
+		label: xfdcActionLabel("Afhandelen"),
+		title: "Nominatie afhandelen...",
 		classes: "xfdc-action"
 	});
 	this.relistButton = new OO.ui.ButtonWidget({
 		framed: false,
-		label: xfdcActionLabel("Relist"),
-		title: "Relist discussion...",
+		label: xfdcActionLabel("Verlengen"),
+		title: "Nominatie verlengen...",
 		classes: "xfdc-action"
 	});
 	const quickKeepMenuOption = new OO.ui.MenuOptionWidget( {
 		data: "quickKeep",
-		label: "Quick Keep",
-		title: "close as \"keep\", remove nomination templates, add old xfd templates to talk pages",
+		label: "Direct behouden",
+		title: "sluiten als \"behouden\"",
 		classes: ["xfdc-menuOptionWidget"]
 	} );
 	const canQuickDelete = !!getRelevantResults(this.model.venue.type, this.model.userIsSysop).find(resultData => resultData.name === "delete");
 	if (canQuickDelete) {
-		const quickDeleteDescription = !this.model.userIsSysop || (this.model.venue.type === "tfd" && prefs.get("tfdDeleteAction") === "holdingCell")
-			? "list nominated pages for deletion"
-			: "delete nominated pages & their talk pages";
 		this.quickCloseMenuOptions = [
 			quickKeepMenuOption,
 			new OO.ui.MenuOptionWidget( {
 				data: "quickDelete",
-				label: "Quick Delete",
-				title: `quickDelete: close as "delete", ${quickDeleteDescription}`,
+				label: "Nuweg",
+				title: "Nuweg: sluiten als verwijderen\"",
 				classes: ["xfdc-menuOptionWidget"]
 			} )
 		];
 	} else {
 		this.quickCloseMenuOptions = [ quickKeepMenuOption ];
 	}
-	
+
 	this.quickCloseButtonMenu = new OO.ui.ButtonMenuSelectWidget( {
 		framed: false,
 		indicator: "down",
 		label:  xfdcActionLabel("quickClose"),
-		title: "Quickly close discussion...",
+		title: "Nominatie direct afhandelen...",
 		$overlay: $("#mw-content-text"),
 		menu: {
 			items: this.quickCloseMenuOptions,
@@ -87,16 +83,15 @@ function DiscussionView(model) {
 	} );
 
 	this.buttonGroup = new OO.ui.ButtonGroupWidget({
-		items: [ 
+		items: [
 			this.closeButton,
-			this.quickCloseButtonMenu,
 			this.relistButton,
 		]
 	});
 	this.buttonGroup.$element.css({margin: "-1em 0"}); // Avoids excess whitespace when added to DOM
-	
+
 	this.statusLabel = new OO.ui.LabelWidget({
-		label: "XFDcloser loading..."
+		label: "TBx-Manager laden..."
 	});
 
 	this.$element.append(
@@ -131,7 +126,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 
 	// Check if already closed. Closed AfDs and MfDs have the box above the heading; others have it below.
 	if (/(afd|mfd)/.test(venue.type) && $heading.parent().attr("class") && $heading.parent().attr("class").includes("xfd-closed")) {
-		// Skip 
+		// Skip
 		return;
 	} else if (!/(afd|mfd)/.test(venue.type) && $heading.next().attr("class")) {
 		// Only for closed discussion will the next element after the heading have any class set
@@ -184,7 +179,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 	const $discussionNodes = $heading.nextUntil(venue.html.head + ", div.xfd-closed, table.xfd-closed");
 	$discussionNodes.addClass(`${id}-discussion-node`);
 
-	// Get list of nominated pages. Also the proposed action for CfD. 
+	// Get list of nominated pages. Also the proposed action for CfD.
 	let pages = [];
 	let action = "";
 	if (venue.type === "cfd") {
@@ -229,8 +224,8 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 	} else {
 		// AFD, FFD, TFD: nominated page links inside span with classes plainlinks, nourlexpansion
 		pages = $discussionNodes
-			.find(venue.html.listitem + " > span.plainlinks.nourlexpansion")
-			.filter(":nth-of-type(" + venue.html.nthSpan + ")")
+			.next("div")
+			.find(venue.html.listitem + " > span.tbp-extra-links > span.tbxm")
 			.children("a")
 			.filter(":first-child")
 			.map(function () { return mw.Title.newFromText($(this).text()); })
@@ -268,7 +263,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 			firstDate = dateFromParts.apply(null, firstDateString.split(" ").reverse() );
 		}
 	}
-	
+
 	// Check if relisted
 	const lastRelist = $("<div>").append($clonedDiscussionNodes).find(".xfd_relist").last().text();
 	if (lastRelist) {

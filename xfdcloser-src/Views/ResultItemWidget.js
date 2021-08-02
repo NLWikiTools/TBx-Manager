@@ -3,7 +3,7 @@ import ResultItemController from "../Controllers/ResultItemController";
 // <nowiki>
 
 /**
- * 
+ *
  * @param {ResultItem} model
  */
 function ResultItemWidget(model, config) {
@@ -24,14 +24,14 @@ function ResultItemWidget(model, config) {
 
 	this.targetInput = new OO.ui.TextInputWidget({validate: config.validatePageName});
 	this.targetField = new OO.ui.FieldLayout( this.targetInput, {
-		label: "to:",
+		label: "naar:",
 		align: "right"
 	} );
 	this.targetField.$element.css({margin: "6px 0 12px 0"});
 
 	this.customResultInput = new OO.ui.TextInputWidget({validate: config.validateCustomResult});
 	this.customField = new OO.ui.FieldLayout( this.customResultInput, {
-		label: "Result:",
+		label: "Uitkomsten:",
 		align: "right"
 	} );
 	this.customField.$element.css({margin: "6px 0"});

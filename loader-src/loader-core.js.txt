@@ -21,7 +21,7 @@
 	}
 
 	// Check if on an XfD page
-	var xfdpage_regex = /(Articles_for_deletion\/|Miscellany_for_deletion|User:Cyberbot_I\/AfD's_requiring_attention|Wikipedia:WikiProject_Deletion_sorting\/(?!(Flat|Compact)$)|(Categories|Files|Templates|Redirects)_for_discussion(?!\/(Working|Holding_cell|Speedy)))(?!\/?(?:Administrator_instructions|Common_outcomes)$)/;
+	var xfdpage_regex = /(Te_beoordelen_pagina's|Te_beoordelen_afbeeldingen|Te_beoordelen_categorieën$)/;
 	var isXfdPage = xfdpage_regex.test(mw.config.get("wgPageName"));
 
 	// Load for XfD pages as well as unlinkable pages 

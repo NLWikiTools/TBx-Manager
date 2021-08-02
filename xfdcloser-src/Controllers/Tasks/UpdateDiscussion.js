@@ -6,7 +6,7 @@ import config from "../../config";
 export default class UpdateDiscussion extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName("Updating discussion");
+		this.model.setName("Discussie bijwerken");
 	}
 
 	getParams() {

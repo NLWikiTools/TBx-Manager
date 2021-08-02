@@ -64,9 +64,9 @@ class TaskItemController {
 		this.widget.field.setErrors(this.makeErrors());
 		if (this.widget.showAllWarningsButton && this.widget.showAllErrorsButton) {
 			this.widget.showAllWarningsButton.toggle(!this.model.showOverflowWarnings && this.model.warnings.length >= prefs.get("collapseWarnings"));
-			this.widget.showAllWarningsButton.setLabel(`Show ${this.model.warnings.length} warnings`);
+			this.widget.showAllWarningsButton.setLabel(`Toon ${this.model.warnings.length} waarschuwingen`);
 			this.widget.showAllErrorsButton.toggle(!this.model.showOverflowErrors && this.model.errors.length >= prefs.get("collapseErrors"));
-			this.widget.showAllErrorsButton.setLabel(`Show ${this.model.errors.length} errors`);
+			this.widget.showAllErrorsButton.setLabel(`Toon ${this.model.errors.length} fouten`);
 		}
 		this.widget.emit("update");
 
@@ -87,57 +87,57 @@ class TaskItemController {
 	doTask() { throw new Error("doTask method not implemented"); }
 
 	logError(code, error) {
-		console.error(`[XFDcloser/${this.model.taskName}] ${code||"unknown"}`, error);
+		console.error(`[TBx-Manager/${this.model.taskName}] ${code||"onbekend"}`, error);
 	}
 
 	handlePageError(code, error, title, action) {
-		action = action || "edit";
+		action = action || "bewerk";
 		switch (code) {
 		case "unexpectedTitle":
-			this.model.addError(`API query result included unexpected title ${makeLink(title)}; this page will not be edited`);
+			this.model.addError(`API-query gaf onverwachte titel ${makeLink(title)}; deze pagina wordt niet bewerkt`);
 			this.model.trackStep("failed");
 			break;
 		case "unexpectedTarget":
-			this.model.addError(`API query result included unexpected target talk page ${makeLink(title)}; this page will not be edited`);
+			this.model.addError(`API-query gaf onverwachte overlegpagina ${makeLink(title)}; deze pagina wordt niet bewerkt`);
 			this.model.trackStep("failed");
 			break;
 		case "doesNotExist":
-			this.model.addError(`${makeLink(title)} does not exist, and will not be edited`);
+			this.model.addError(`${makeLink(title)} bestaat niet, en wordt daarom niet bewerkt`);
 			this.model.trackStep("failed");
 			break;
 		case "couldNotUpdate":
-			this.model.addError(`Could not update ${makeLink(title)}: ${error.message}`);
+			this.model.addError(`Kan ${makeLink(title)}: ${error.message} niet bijwerken`);
 			this.model.trackStep("failed");
 			break;
 		case "subjectDoesNoteExist":
-			this.model.addError(`The subject page for ${makeLink(title)} does not exist; this talk page will not be edited`);
+			this.model.addError(`${makeLink(title)} bestaat niet, en de overlegpagina wordt daarom niet bewerkt`);
 			this.model.trackStep("failed");
 			break;
 		case "targetIsNotModule":
-			this.model.addError(`Could not redirect ${makeLink(title)} because ${error && error.target
+			this.model.addError(`Kan geen doorverwijzing maken voor ${makeLink(title)} omdat ${error && error.target
 				? makeLink(error.target)
-				: "the target"
-			} is not a module`);
+				: "de doelpagina"
+			} geen module is`);
 			this.model.trackStep("failed");
 			break;
 		case "skipped":
-			this.model.addWarning(`${makeLink(title)} skipped`);
+			this.model.addWarning(`${makeLink(title)} overgeslagen`);
 			this.model.trackStep("skipped");
 			break;
 		case "skippedNoneFound":
-			this.model.addWarning(`${makeLink(title)} skipped: none found`);
+			this.model.addWarning(`${makeLink(title)} overgeslagen: niet gevonden`);
 			this.model.trackStep("skipped");
 			break;
 		case "skippedNoLinks":
-			this.model.addWarning(`${makeLink(title)} skipped (no direct links)`);
+			this.model.addWarning(`${makeLink(title)} overgeslagen: geen directe links`);
 			this.model.trackStep("skipped");
 			break;
 		case "noChangesMade":
-			this.model.addError(`Did not find any changes to make to ${makeLink(title)}`);
+			this.model.addError(`Geen uit te voeren bewerkingen gevonden voor ${makeLink(title)}`);
 			this.model.trackStep("skipped");
 			break;
 		case "nominationTemplateNotFound":
-			this.model.addError(`Nomination template not found on page ${makeLink(title)}`);
+			this.model.addError(`Geen nominatie-sjabloon gevonden op ${makeLink(title)}`);
 			this.model.trackStep("skipped");
 			break;
 		case "abort":
@@ -148,7 +148,7 @@ class TaskItemController {
 			this.model.trackStep("failed");
 			break;
 		default:
-			this.model.addError(`${code||"unknown"} error: could not ${action} page ${makeLink(title)}`);
+			this.model.addError(`fout ${code||"onbekend"}: kan niet "${action}" op pagina ${makeLink(title)}`);
 			this.model.trackStep("failed");
 			this.logError(code, error);
 		}
@@ -157,7 +157,7 @@ class TaskItemController {
 	handleOverallError(errortype, code, error) {
 		if (errortype === "read") {
 			// "write" errors already handled via #handlePageError
-			this.model.addError(`${code||"unknown"} error: Could not read contents of nominated ${this.model.discussion.pages.length > 1 ? "pages" : "page"}`);
+			this.model.addError(`fout ${code||"onbekend"}: Kan de content van de genomineerde ${this.model.discussion.pages.length > 1 ? "pagina's" : "pagina"} niet lezen`);
 			this.model.setFailed();
 			this.logError(code, error);
 			return rejection();

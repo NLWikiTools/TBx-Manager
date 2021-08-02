@@ -33,20 +33,20 @@ UnlinkWindow.static.actions = [
 	},
 	{
 		action: "close",
-		label: "Close",
+		label: "Sluiten",
 		flags: ["primary", "progressive"],
 		modes: "task",
 		disabled: true
 	},
 	// Safe actions (top left)
 	{
-		label: "Cancel",
+		label: "Annuleren",
 		flags: "safe",
 		modes: "initial"
 	},
 	{
 		action: "abort",
-		label: "Abort",
+		label: "Afbreken",
 		flags: ["safe", "destructive"],
 		modes: "task"
 	}

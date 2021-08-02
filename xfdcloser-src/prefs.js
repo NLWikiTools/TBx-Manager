@@ -7,7 +7,7 @@ import { defaultPrefValues } from "./data";
 const API = new mw.Api({
 	ajax: {
 		headers: { 
-			"Api-User-Agent": `XFDcloser/${config.script.version} ( https://en.wikipedia.org/wiki/WP:XFDC )`
+			"Api-User-Agent": `TBx-Manager/${config.script.version} ( https://nl.wikipedia.org/wiki/WP:TBXM )`
 		}
 	}
 });
@@ -58,7 +58,7 @@ const set = (prefs, mode) => {
 		"optionvalue": options
 	}).then(() => {
 		mw.user.options.set("userjs-xfdc", options);
-		mw.notify("XFDcloser preferences updated successfully");
+		mw.notify("TBx-Manager instellingen opgeslagen");
 	});
 };
 

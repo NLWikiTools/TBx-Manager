@@ -47,7 +47,7 @@ function ResultPanel( config, model ) {
 	} );
 	this.resultSummary = new OO.ui.TextInputWidget();
 	this.resultSummaryField = new OO.ui.FieldLayout( this.resultSummary, {
-		label: $("<strong>").text("Result summary"),
+		label: $("<strong>").text("Samenvatting"),
 	} );
 	this.resultFieldset.addItems([
 		this.resultWidgetField,
@@ -58,14 +58,14 @@ function ResultPanel( config, model ) {
 	// Rationale
 	this.rationaleFieldset = new OO.ui.FieldsetLayout();
 	this.copyButton = new OO.ui.ButtonWidget( {
-		label: "Copy from above",
+		label: "Kopieer van hierboven",
 		framed: false
 	} );
 	this.rationaleTextbox = new OO.ui.MultilineTextInputWidget( {
 		rows: 3
 	} );
 	this.newSentenceOption = new OO.ui.CheckboxMultioptionWidget( {
-		label: "Result is a new sentence",
+		label: "Besluit is nieuwe regel",
 		selected: true
 	} );
 	this.rationaleWidget = new OO.ui.Widget();
@@ -81,7 +81,7 @@ function ResultPanel( config, model ) {
 	);
 
 	// Preview
-	this.previewFieldset = new OO.ui.FieldsetLayout({label: "Preview"});
+	this.previewFieldset = new OO.ui.FieldsetLayout({label: "Voorvertoning"});
 	this.preview = new OO.ui.Widget();
 	this.preview.$element.css({
 		"border":"2px dashed #ccc",

@@ -1,7 +1,7 @@
 /**
  * This script is used to deploy files to the wiki.
  * You must have interface-admin rights to use this.
- * 
+ *
  * ----------------------------------------------------------------------------
  *    Set up:
  * ----------------------------------------------------------------------------
@@ -12,16 +12,16 @@
  *    file for an example. Save it here in the "bin" directory with file
  *    name "credentials.json".
  *    IMPORTANT: Never commit this file to the repository!
- * 
+ *
  * ---------------------------------------------------------------------------
  *    Pre-deployment checklist:
  * ---------------------------------------------------------------------------
  * 1) Changes committed and merged to master branch on GitHub repo
  * 2) Currently on master branch, and synced with GitHub repo
- * 3) Version bumped, and that change commited and synced to GitHub repo 
+ * 3) Version bumped, and that change commited and synced to GitHub repo
  * 3) Run a full build using "npm run build"
  * When all of the above are done ==> you are ready to proceed with deployment
- * 
+ *
  * --------------------------------------------------------------------------
  *    Usage:
  * --------------------------------------------------------------------------
@@ -40,7 +40,7 @@ const fs = require("fs");
 const {mwn} = require("mwn");
 const {execSync} = require("child_process");
 const prompt = require("prompt-sync")({sigint: true});
-const {username, password} = require("./credentials.json");
+const {username, password, betausername, betapassword} = require("./credentials.json");
 
 function logError(error) {
 	error = error || {};
@@ -51,47 +51,60 @@ function logError(error) {
 }
 
 // Prompt user for info
-const wiki = prompt("> Wikipedia subdomain: ");
-const beta = prompt("> Beta deployment [Y/n]: ");
+const cluster = prompt("> Naar welk cluster moet gedeployed worden [R]egulier/[B]eta: ");
+const isRegulier = (cluster.trim().toUpperCase() === "R"||cluster.trim().toUpperCase() === "REGULIER");
+console.log(`${isRegulier ? "REGULIER" : "BETA"}-cluster geselecteerd.`);
+const wiki = prompt("> Wikipedia subdomein: ");
+const beta = prompt("> Is dit een Beta-versie [Y/n]: ");
 const isBeta = beta.trim().toUpperCase() !== "N";
-console.log(`Targeting ${isBeta ? "BETA" : "MAIN"} version of script.`);
-const message = prompt("> Edit summary message (optional): ");
+console.log(`${isBeta ? "BETA" : "MAIN"} versie van het script wordt bijgewerkt.`);
+const message = prompt("> Bewerkingssamenvatting (optioneel): ");
 
 // Extract info for edit summary.
+const title = require("../package.json").title;
 const version = require("../package.json").version;
 const sha = execSync("git rev-parse --short HEAD").toString("utf8").trim();
-const editSummary = `v${version} at ${sha}: ${message || "Updated from repository"}`;
-console.log(`Edit summary is: "${editSummary}"`);
+const editSummary = `${title} bijgewerkt naar versie ${version} (${sha}): ${message || "Bijwerken vanaf GitHub"}`;
+console.log(`Bewerkingssamenvatting is: "${editSummary}"`);
 
 const deployments = [
-	{file: "loader-gadget.js", target: "MediaWiki:Gadget-XFDcloser.js"},
-	{file: "core-gadget.js", target: `MediaWiki:Gadget-XFDcloser-core${isBeta ? "-beta" : ""}.js`},
-	{file: "styles-gadget.css", target: `MediaWiki:Gadget-XFDcloser-core${isBeta ? "-beta" : ""}.css`}
+	{file: "loader-gadget.js", target: "MediaWiki:Gadget-TBxManager.js"},
+	{file: "core-gadget.js", target: `MediaWiki:Gadget-TBxManager-core${isBeta ? "-beta" : ""}.js`},
+	{file: "styles-gadget.css", target: `MediaWiki:Gadget-TBxManager-core${isBeta ? "-beta" : ""}.css`}
 ];
 
-const api = new mwn({
-	apiUrl: `https://${wiki}.wikipedia.org/w/api.php`,
-	username: username,
-	password: password
-});
+let api;
+if (isRegulier) {
+	api = new mwn({
+		apiUrl: `https://${wiki}.wikipedia.org/w/api.php`,
+		username: username,
+		password: password
+	});
+} else {
+	api = new mwn({
+		apiUrl: `https://${wiki}.wikipedia.beta.wmflabs.org/w/api.php`,
+		username: betausername,
+		password: betapassword
+	});
+}
 
-console.log(`... logging in as ${username}  ...`);
+console.log(`... inloggen als ${username}  ...`);
 api.loginGetToken().then(() => {
-	prompt("> Press [Enter] to start deploying or [ctrl + C] to cancel");
-	console.log("--- starting deployment ---");
+	prompt("> Druk op [Enter] om het deployen te starten of druk op [Ctrl + C] om af te breken");
+	console.log("--- deployment gestart ---");
 	const editPromises = deployments.map(deployment => {
 		let content = fs.readFileSync("./dist/"+deployment.file, "utf8").toString();
 		return api.save(deployment.target, content, editSummary).then((response) => {
 			const status = response && response.nochange
-				? "━ No change saving"
-				: "✔ Successfully saved";
-			console.log(`${status} ${deployment.file} to ${wiki}:${deployment.target}`);
+				? "━ Niets om bij te werken"
+				: "✔ Succesvol opgeslagen";
+			console.log(`${status} - ${wiki}:${deployment.target}`);
 		}, (error) => {
-			console.log(`✘ Failed to save ${deployment.file} to ${wiki}:${deployment.target}`);
+			console.log(`✘ Opslaan mislukt - ${wiki}:${deployment.target}`);
 			logError(error);
 		});
 	});
 	Promise.all(editPromises).then(() => {
-		console.log("--- end of deployment ---");
+		console.log("--- deployment afgerond ---");
 	});
 }).catch(logError);

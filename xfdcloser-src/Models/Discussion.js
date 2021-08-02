@@ -5,7 +5,7 @@ import { makeLink, encodeForWikilinkFragment } from "../util";
 // <nowiki>
 class Discussion {
 	/**
-	 * 
+	 *
 	 * @param {Object} config
 	 * @param {jQuery} config.$headlineSpan
 	 * @param {String} config.id unique id
@@ -21,7 +21,7 @@ class Discussion {
 	constructor(config) {
 		// Call mixin constructor
 		OO.EventEmitter.call(this);
-		
+
 		this.$headlineSpan = config.$headlineSpan;
 		this.id = config.id;
 		this.venue = config.venue;
@@ -36,7 +36,7 @@ class Discussion {
 		this.isRelisted = config.isRelisted;
 		this.userIsSysop = config.userIsSysop;
 		this.classes = config.classes;
-		this.status = "Loading...";
+		this.status = "Laden...";
 		this.showStatus = true;
 	}
 	get showButtons() {
@@ -87,12 +87,8 @@ class Discussion {
 	}
 
 	setStatusReady() {
-		if ( !this.userIsSysop && this.pages.length > 50 ) {
-			this.status = "[XFDcloser: Too many pages for non-admin]";
-		} else {
-			this.status = "";
-			this.showStatus = false;
-		}
+		this.status = "";
+		this.showStatus = false;
 		this.emit("update");
 	}
 
@@ -103,7 +99,7 @@ class Discussion {
 
 	setWindowOpened(type) {
 		this.type = type;
-		this.status = type.slice(0,1).toUpperCase() + type.slice(1).replace(/e$/, "") + "ing discussion...";
+		this.status = type.slice(0,1).toUpperCase() + type.slice(1).replace(/e$/, "") + "en beoordeling...";
 		this.showStatus = true;
 		this.emit("update");
 	}
@@ -111,7 +107,7 @@ class Discussion {
 	setClosedWindowData(windowData) {
 		switch (true) {
 		case windowData && windowData.aborted:
-			this.status = `<strong>Aborted</strong> during ${this.type}; check ${makeLink("Special:MyContributions", "your contributions")} to see which actions were already completed.`;
+			this.status = `<strong>Aborted</strong> during ${this.type}; check ${makeLink("Special:MyContributions", "jouw bijdragen")} to see which actions were already completed.`;
 			break;
 		case windowData && windowData.success: {
 			const actioned = this.type.slice(0,1).toUpperCase() + this.type.slice(1).replace(/e$/, "") + "ed";

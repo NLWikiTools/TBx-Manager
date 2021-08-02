@@ -22,7 +22,7 @@ function OptionsItemWidget(model, config) {
 
 	this.fieldset.addItems( [
 		new OO.ui.FieldLayout( this.actionsDropdown, {
-			label: "Actions"
+			label: "Acties"
 		} ),
 	] );
 

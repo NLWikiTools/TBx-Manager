@@ -26,12 +26,12 @@ let mwConfig = mw.config.get( [
 // Set custom version of namespaces with description for namespace 0
 mwConfig.namespaces = $.extend({}, mwConfig.wgFormattedNamespaces, {0: "article"});
 // Month names - no longer provided by mw.config, see phab:T219340
-const months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const months = ["", "Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
 
 let config = {
 	// Script info
 	script: {
-		advert: `([[WP:XFDC#${scriptVersion}|XFDcloser]])`,
+		advert: `([[WP:TBXM#${scriptVersion}|TBx-Manager]])`,
 		version: scriptVersion
 	},
 	// Mobile site detection, as that requires some special handling
@@ -46,7 +46,7 @@ let config = {
 		isSysop: mwConfig.wgUserGroups.includes("sysop"),
 		sig: mwConfig.wgUserGroups.includes("sysop")
 			? "~~~~"
-			: "<small>[[Wikipedia:NACD|(non-admin closure)]]</small> ~~~~"
+			: "<small>(niet-moderator afhandeling)</small> ~~~~"
 	},
 	// Start time, for detecting edit conflicts
 	startTime: new Date(),

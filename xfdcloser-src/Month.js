@@ -7,7 +7,7 @@ export default class Month {
 	constructor(index) {
 		this.index = index;
 	}
-	static names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	static names = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
 	get name() {
 		return Month.names[this.index];
 	}

@@ -23,7 +23,7 @@ ShowHideTag.prototype.hideClosed = function() {
 	try {
 		window.localStorage.setItem("xfdc-closedHidden", true);
 	}  catch(e) { /* continue regardless of error */ }
-	$(".xfd-closed, .tfd-closed, #XFDcloser-showhide-hide").hide();
+	$(".sessie-uitgevoerd, #XFDcloser-showhide-hide").hide();
 	$("#XFDcloser-showhide-show").show();
 };
 
@@ -32,7 +32,7 @@ ShowHideTag.prototype.showClosed = function() {
 	try {
 		window.localStorage.setItem("xfdc-closedHidden", "");
 	}  catch(e) { /* continue regardless of error */ } 
-	$(".xfd-closed, .tfd-closed, #XFDcloser-showhide-hide").show();
+	$(".sessie-uitgevoerd, #XFDcloser-showhide-hide").show();
 	$("#XFDcloser-showhide-show").hide();
 };
 	
@@ -43,12 +43,12 @@ ShowHideTag.initialiseNewTag = function() {
 		.append(
 			$("<a>")
 				.attr("id", "XFDcloser-showhide-hide")
-				.text("Hide closed discussions")
+				.text("Verberg afgehandelde beoordelingen")
 				.toggle(!tag.isHidden)
 				.on("click", tag.hideClosed),
 			$("<a>")
 				.attr("id", "XFDcloser-showhide-show")
-				.text("Show closed discussions")
+				.text("Toon afgehandelde beoordelingen")
 				.toggle(tag.isHidden)
 				.on("click", tag.showClosed)
 		)

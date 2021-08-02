@@ -1,6 +1,6 @@
 import { $, mw, OO } from "../../../globals";
 import TaskItemController from "../TaskItemController";
-import { rejection, dmyDateString, dateFromUserInput, uppercaseFirst, ymdDateString } from "../../util";
+import { rejection, dmyDateString, dateFromUserInput, ymdDateString } from "../../util";
 import Template from "../../Template";
 // <nowiki>
 
@@ -41,7 +41,7 @@ export default class AddOldXfdTask extends TaskItemController {
 		const titleObject = mw.Title.newFromText(pageTitle);
 		const PAGENAME = titleObject.getMain();
 		const SUBJECTPAGENAME = titleObject.getSubjectPage().getNamespacePrefix() +	PAGENAME; 
-		let oldafdmulti = "{{Old AfD multi";
+		let oldafdmulti = "{{Behouden";
 		let count = 0;
 		let oldAfdTemplate;
 
@@ -49,17 +49,16 @@ export default class AddOldXfdTask extends TaskItemController {
 		templates.forEach(template => {
 			const isXfdTemplate = /(a|t|d|f|i|m|r)fd/i.test(template.name);
 			if ( !isXfdTemplate ) return;
-			const dateParamValue = template.getParamValue("date") || "";
+			const dateParamValue = template.getParamValue("datum") || "";
 			const date = dateFromUserInput(dateParamValue);
 			const ymdFormatDate = date && ymdDateString(date) || dateParamValue;
 			const dmyFormatDate = date && dmyDateString(date) || dateParamValue;
-			const result = template.getParamValue("result") || "keep";
 
 			// Old AFDs
 			if (/(?:old|afd) ?(?:old|afd) ?(?:multi|full)?/i.test(template.name)){
 				oldAfdTemplate = template;
 				template.parameters.forEach(param => {
-					oldafdmulti += ` |${param.name}=${param.value}`;
+					oldafdmulti += `|datum${count}=${dmyFormatDate}|pagina${count}=${page}`;
 					const numCheck = /[A-z]+([0-9]+)/i.exec(param.name);
 					const paramNum = numCheck && parseInt(numCheck[1]) || 1;
 					if (paramNum > count) {
@@ -75,7 +74,7 @@ export default class AddOldXfdTask extends TaskItemController {
 				const page = `{{subst:#ifexist:Wikipedia:Templates for deletion/Log/${logSubpage}`+
 					`|Wikipedia:Templates for deletion/Log/${logSubpage}#${fragment}`+
 					`|Wikipedia:Templates for discussion/Log/${logSubpage}#${fragment}}}`;
-				oldafdmulti += ` |date${count}=${dmyFormatDate} |result${count}='''${uppercaseFirst(result.replace(/'''/g, ""))}''' |page${count}=${page}`;
+				oldafdmulti += `|datum${count}=${dmyFormatDate}|pagina${count}=${page}`;
 				wikitext = wikitext.replace(template.wikitext+"\n", "").replace(template.wikitext, "");
 			}
 			// Old FFDs
@@ -87,7 +86,7 @@ export default class AddOldXfdTask extends TaskItemController {
 					`|{{subst:#ifexist:Wikipedia:Files for deletion/${ymdFormatDate}`+
 					`|Wikipedia:Files for deletion/${ymdFormatDate}#${fragment}`+
 					`|Wikipedia:Files for discussion/${ymdFormatDate}#${fragment}}}}}`;
-				oldafdmulti += ` |date${count}=${dmyFormatDate} |result${count}='''${uppercaseFirst(result.replace(/'''/g, ""))}''' |page${count}=${page}`;
+				oldafdmulti += `|datum${count}=${dmyFormatDate}|pagina${count}=${page}`;
 				wikitext = wikitext.replace(template.wikitext+"\n", "").replace(template.wikitext, "");
 			}
 			// Old MFDs
@@ -98,7 +97,7 @@ export default class AddOldXfdTask extends TaskItemController {
 					template.getParamValue("page") ||
 					SUBJECTPAGENAME;
 				const page = `Wikipedia:Miscellany for deletion/${subpage}`;
-				oldafdmulti += ` |date${count}=${dmyFormatDate} |result${count}='''${uppercaseFirst(result.replace(/'''/g, ""))}''' |page${count}=${page}`;
+				oldafdmulti += `|datum${count}=${dmyFormatDate}|pagina${count}=${page}`;
 				wikitext = wikitext.replace(template.wikitext+"\n", "").replace(template.wikitext, "");
 			}
 			// Old RFDs
@@ -109,7 +108,7 @@ export default class AddOldXfdTask extends TaskItemController {
 				const page = rawlink
 					? rawlink.slice(2, rawlink.indexOf("|"))
 					: "Wikipedia:Redirects for discussion/Log/" + subpage;
-				oldafdmulti += ` |date${count}=${dmyFormatDate} |result${count}='''${uppercaseFirst(result.replace(/'''/g, ""))}''' |page${count}=${page}`;
+				oldafdmulti += `|datum${count}=${dmyFormatDate}|pagina${count}=${page}`;
 				wikitext = wikitext.replace(template.wikitext+"\n", "").replace(template.wikitext, "");
 			}
 		});
@@ -122,15 +121,12 @@ export default class AddOldXfdTask extends TaskItemController {
 		// Otherwise, add current discussion to oldafdmulti
 		count++;
 		const currentCount = count === 1 ? "" : count.toString();
-		const currentResult = count === 1
-			? this.model.result.getResultText()
-			: uppercaseFirst(this.model.result.getResultText());
 
 		const page = this.model.venue.type === "afd"
 			? this.model.discussion.discussionSubpageName
 			: this.model.discussion.discussionPageLink;
 			
-		oldafdmulti += ` |date${currentCount}=${dmyDateString(this.model.discussion.nominationDate)} |result${currentCount}='''${currentResult}''' |page${currentCount}=${page}}}`;
+		oldafdmulti += `|datum${currentCount}=${dmyDateString(this.model.discussion.nominationDate)}|pagina${currentCount}=${page}}}`;
 
 		if ( oldAfdTemplate ) {
 			// Override the existing oldafdmulti

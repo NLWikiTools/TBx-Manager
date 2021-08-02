@@ -215,7 +215,7 @@ class API extends mw.Api {
 	}
 }
 
-const api = new API(`XFDcloser/${config.script.version} ( https://en.wikipedia.org/wiki/WP:XFDC )`);
+const api = new API(`TBx-Manager/${config.script.version} ( https://nl.wikipedia.org/wiki/WP:TBXM )`);
 
 export default api;
 // </nowiki>

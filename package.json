@@ -1,8 +1,9 @@
 {
-  "name": "xfdcloser",
-  "version": "4.0.12",
-  "description": "Wikipedia userscript that helps assess pages for WikiProjects",
-  "homepage": "https://github.com/wikimedia-gadgets/xfdcloser",
+  "title": "TBx-Manager",
+  "name": "tbxmanager",
+  "version": "0.2.1",
+  "description": "Wikipedia gadget that helps assess pages for WikiProjects",
+  "homepage": "https://github.com/NLWikiTools/TBx-Manager",
   "browser": "index.js",
   "scripts": {
     "test": "npm run globals:node && mocha --require @babel/register --reporter list && npm run globals:window",
@@ -24,19 +25,19 @@
     "build:minify": "uglifyjs dist/core.js --compress -b ascii_only=true,beautify=false --output dist/core.min.js",
     "build:concat": "concat-cli -f \"core-comment-top.js\" dist/core.min.js \"core-comment-bottom.js\" -o dist/core-gadget.js",
     "build:css": "node bin/concatCss",
-    "build": "npm run globals:window && npm run build:loader && npm run lint && npm run test:all && npm run build:css && npm run build:bundle && npm run build:minify && npm run build:concat",
-    "build:dev": "npm run globals:window && npm run build:loader:dev && npm run lint:dev && npm run test:all && npm run build:bundle ",
+    "build": "npm run globals:window && npm run build:loader && npm run lint && npm run build:css && npm run build:bundle && npm run build:minify && npm run build:concat",
+    "build:dev": "npm run globals:window && npm run build:loader:dev && npm run lint:dev && npm run build:bundle ",
     "build:quickdev": "npm run globals:window && npm run build:loader:dev && npm run build:bundle "
   },
   "author": {
-    "name": "Evad37",
-    "url": "https://en.wikipedia.org/wiki/User:Evad37"
+    "name": "Bas dehaan",
+    "url": "https://nl.wikipedia.org/wiki/Gebruiker:Bas_dehaan"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wikimedia-gadgets/xfdcloser.git"
+    "url": "https://github.com/NLWikiTools/TBx-Manager.git"
   },
-  "license": "(MIT OR CC-BY-4.0)",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -60,6 +61,10 @@
     "replace-in-file": "^6.0.0",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^20.0.0",
+    "terser-webpack-plugin": "^5.1.4",
     "uglify-js": "^3.8.0"
+  },
+  "dependencies": {
+    "minify": "^7.0.2"
   }
 }

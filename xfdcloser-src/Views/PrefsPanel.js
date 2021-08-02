@@ -10,7 +10,7 @@ function PrefsPanel( config, model ) {
 
 	this.model = model;
 
-	this.fieldset = new OO.ui.FieldsetLayout({label: "Preferences"});
+	this.fieldset = new OO.ui.FieldsetLayout({label: "Voorkeuren"});
 	this.$element.append(this.fieldset.$element);
 
 	this.controller = new PrefsPanelController(this.model, this);
