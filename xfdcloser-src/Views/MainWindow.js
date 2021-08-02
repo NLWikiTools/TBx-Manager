@@ -17,11 +17,10 @@ OO.mixinClass( MainWindow, DraggableMixin );
 
 MainWindow.static.name = "main";
 MainWindow.static.title = () => $("<span>").css({"font-weight":"normal"}).append(
-	$("<a>").css({"font-weight": "bold"}).attr({"href": mw.util.getUrl("WP:XFDC"), "target": "_blank"}).text("XFDcloser"),
+	$("<a>").css({"font-weight": "bold"}).attr({"href": mw.util.getUrl("WP:TBx-Manager"), "target": "_blank"}).text("TBx-Manager"),
 	" (",
-	$("<a>").attr({"href": mw.util.getUrl("WT:XFDC"), "target": "_blank"}).text("talk"),
-	") ",
-	$("<span>").css({"font-size":"90%"}).text("v"+appConfig.script.version)
+	$("<span>").css({"font-size":"90%"}).text("v"+appConfig.script.version),
+	")"
 );
 MainWindow.static.size = "large";
 MainWindow.static.actions = [
@@ -30,7 +29,7 @@ MainWindow.static.actions = [
 		action: "savePrefs",
 		label: "Update",
 		flags: ["primary", "progressive"],
-		modes: "prefs" 
+		modes: "prefs"
 	},
 	{
 		action: "next",
@@ -127,8 +126,8 @@ MainWindow.prototype.initialize = function () {
 		padded: false,
 		expanded: false
 	} );
-	
-	this.$body.append( this.stackLayout.$element );	
+
+	this.$body.append( this.stackLayout.$element );
 
 	// Handle certain keyboard events. Requires something in the window to be focused,
 	// so add a tabindex to the body and it's parent container.
@@ -148,7 +147,7 @@ MainWindow.prototype.initialize = function () {
 			this.$body.scrollTop(scrollAmount);
 			event.preventDefault();
 		}.bind(this));
-	
+
 };
 
 // Override the getBodyHeight() method to specify a custom height
@@ -156,7 +155,7 @@ MainWindow.prototype.getBodyHeight = function () {
 	return $(".oo-ui-processDialog-errors").get(0).scrollHeight || this.model.height;
 };
 
-// Use getSetupProcess() to set up the window with data passed to it at the time 
+// Use getSetupProcess() to set up the window with data passed to it at the time
 // of opening
 /**
  * @param {Object} data
@@ -200,9 +199,9 @@ MainWindow.prototype.getSetupProcess = function ( data ) {
 				this.taskListPanel,
 				this.prefsPanel
 			]);
-			
+
 			if (this.model.isQuick) {
-				// Hack to make sure there are items in the panels' groups 
+				// Hack to make sure there are items in the panels' groups
 				this.taskListPanel.controller.updateGroupFromModel();
 				this.optionsPanel.controller.updateGroupFromModel();
 			}
@@ -216,7 +215,7 @@ MainWindow.prototype.getSetupProcess = function ( data ) {
 MainWindow.prototype.getReadyProcess = function ( data ) {
 	data = data || {};
 	return MainWindow.super.prototype.getReadyProcess.call( this, data )
-		.next( () => { 
+		.next( () => {
 			this.makeDraggable(0, data.offsetTop);
 			/* TODO: Set focus */
 		} );
@@ -231,7 +230,7 @@ MainWindow.prototype.getActionProcess = function (action) {
 /**
  * Overrides OO.ui.Dialog.prototype.onActionClick to allow abort actions to occur
  * even if in a pending state.
- */ 
+ */
 MainWindow.prototype.onActionClick = function ( action ) {
 	if ( !this.isPending() || action.getAction() === "abort" ) {
 		this.executeAction( action.getAction() );

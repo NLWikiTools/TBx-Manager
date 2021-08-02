@@ -26,7 +26,7 @@ let mwConfig = mw.config.get( [
 // Set custom version of namespaces with description for namespace 0
 mwConfig.namespaces = $.extend({}, mwConfig.wgFormattedNamespaces, {0: "article"});
 // Month names - no longer provided by mw.config, see phab:T219340
-const months = ["", "Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
+const months = ["", "januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
 
 let config = {
 	// Script info

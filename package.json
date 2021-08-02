@@ -1,7 +1,7 @@
 {
   "title": "TBx-Manager",
   "name": "tbxmanager",
-  "version": "0.2.1",
+  "version": "0.2.11",
   "description": "Wikipedia gadget that helps assess pages for WikiProjects",
   "homepage": "https://github.com/NLWikiTools/TBx-Manager",
   "browser": "index.js",
@@ -27,7 +27,14 @@
     "build:css": "node bin/concatCss",
     "build": "npm run globals:window && npm run build:loader && npm run lint && npm run build:css && npm run build:bundle && npm run build:minify && npm run build:concat",
     "build:dev": "npm run globals:window && npm run build:loader:dev && npm run lint:dev && npm run build:bundle ",
-    "build:quickdev": "npm run globals:window && npm run build:loader:dev && npm run build:bundle "
+    "build:quickdev": "npm run globals:window && npm run build:loader:dev && npm run build:bundle ",
+    "deploy": "node bin/deploy.js",
+    "bump:patch": "node bin/version --bump --patch",
+    "bump:minor": "node bin/version --bump --minor",
+    "bump:major": "node bin/version --bump --major",
+    "update": "npm run bump:patch && npm run build && npm run deploy",
+    "update:minor": "npm run bump:minor && npm run build && npm run deploy",
+    "update:major": "npm run bump:major && npm run build && npm run deploy"
   },
   "author": {
     "name": "Bas dehaan",

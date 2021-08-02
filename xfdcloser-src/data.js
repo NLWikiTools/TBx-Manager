@@ -144,7 +144,7 @@ const defaultPrefValues = prefs.reduce((accumulated, currentPref) => {
 /**
  * @param {String} venueType type of venue, e.g. "afd"
  * @param {Boolean} userIsSysop
- * @returns {function(Object): boolean} 
+ * @returns {function(Object): boolean}
  */
 const isRelevant = (venueType, userIsSysop) => data => (
 	(!Array.isArray(data.venues) || data.venues.includes(venueType)) &&
@@ -154,9 +154,9 @@ const isRelevant = (venueType, userIsSysop) => data => (
 
 /**
  * Get the resultsData filtered by venue and sysop stasus
- * 
+ *
  * @param {String} venueType type of venue, e.g. "afd"
- * @param {Boolean} userIsSysop 
+ * @param {Boolean} userIsSysop
  * @returns {Object[]} relevant resultsData
  */
 const getRelevantResults = function(venueType, userIsSysop) {
@@ -173,7 +173,7 @@ const getRelevantActions = function(venueType, userIsSysop, result) {
 	const resultData = getRelevantResults(venueType, userIsSysop).find(resData => resData.name === result);
 	if ( !resultData ) {
 		console.log("No results data for", {venueType, userIsSysop, result});
-		
+
 	}
 	return actions.filter(action => resultData.actions.includes(action.name));
 };
@@ -192,7 +192,7 @@ const getRelevantOptions = function(venueType, userIsSysop, actions) {
 };
 
 /**
- * 
+ *
  * @param {Boolean} userIsSysop
  * @returns {Object[]} relevant prefs
  */

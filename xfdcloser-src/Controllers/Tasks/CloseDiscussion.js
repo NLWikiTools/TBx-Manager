@@ -51,22 +51,14 @@ export default class CloseDiscussion extends TaskItemController {
 			return rejection("abort");
 		}
 
-		const xfd_close_top = this.model.venue.wikitext.closeTop
-			.slice(page.content.indexOf("{{einde}}"));
+		const xfd_close_top = this.model.venue.wikitext.closeTop;
 		const xfd_close_bottom = this.model.venue.wikitext.closeBottom
 			.replace(/__RESULT__/, this.model.result.getResultText() || "&thinsp;")
 			.replace(/__TO_TARGET__/, this.model.result.getFormattedTarget({prepend: " naar "}))
-			.replace(/__RATIONALE__/, this.model.result.getFormattedRationale("punctuated") || ".")
-			.slice(page.content.indexOf("{{su}}"));
-		const section_content = page.content
-			.slice(page.content.indexOf("\n") + 1)
-			.replace(
-				/({{closing}}|{{AfDh}}|{{AfDb}}|\{\{REMOVE THIS TEMPLATE WHEN CLOSING THIS AfD\|.?\}\}|<noinclude>\[\[Category:Relisted AfD debates\|.*?\]\](\[\[Category:AfD debates relisted 3 or more times|.*?\]\])?<\/noinclude>)/gi,
-				"");
-		const updated_top = this.model.venue.hasIndividualSubpages
-			? xfd_close_top + "\n" + section_heading
-			: section_heading + "\n" + xfd_close_top;
-		const updated_section = updated_top + section_content.trim() + "\n" + xfd_close_bottom;
+			.replace(/__RATIONALE__/, this.model.result.getFormattedRationale("punctuated") || ".");
+		const section_content = page.content;
+		const updated_top = xfd_close_top;
+		const updated_section = updated_top + "\n" + section_content.trim() + "\n" + xfd_close_bottom;
 
 		return {
 			section: this.model.discussion.sectionNumber,

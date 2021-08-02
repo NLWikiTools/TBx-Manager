@@ -8,17 +8,17 @@ function pageLinkNeedsColon(pageName) {
 
 class ResultItem {
 	/**
-	 * 
+	 *
 	 * @param {Object} config
 	 *  @param {Object[]} config.availableResults relevant result objects from data.js
-	 *  @param {String} [config.pageName] 
-	 *  @param {String} [config.selectedResultName] 
-	 *  @param {Boolean} [config.softResult] 
-	 *  @param {Boolean} [config.speedyResult] 
-	 *  @param {Boolean} [config.deleteFirstResult] 
-	 *  @param {String} [config.targetPageName] 
-	 *  @param {String} [config.customResultText] 
-	 * 
+	 *  @param {String} [config.pageName]
+	 *  @param {String} [config.selectedResultName]
+	 *  @param {Boolean} [config.softResult]
+	 *  @param {Boolean} [config.speedyResult]
+	 *  @param {Boolean} [config.deleteFirstResult]
+	 *  @param {String} [config.targetPageName]
+	 *  @param {String} [config.customResultText]
+	 *
 	 */
 	constructor(config) {
 		// call mixin constructor
@@ -33,7 +33,7 @@ class ResultItem {
 		this.targetPageName = config.targetPageName || "";
 		this.customResultText = config.customResultText || "";
 	}
-	
+
 	// Aliases
 	get name() {
 		return this.pageName;
@@ -115,9 +115,9 @@ class ResultItem {
 			return this.customResultText.trim();
 		}
 		const prefix = (
-			( this.isSpeedy() && "speedy " ) ||
+			( this.isSpeedy() && "direct " ) ||
 			( this.isSoft() && "soft " ) ||
-			( this.isDeleteFirst() && "delete and ")
+			( this.isDeleteFirst() && "verwijderen en ")
 		);
 		return ( prefix || "" ) + this.selectedResultName;
 	}
@@ -127,7 +127,7 @@ class ResultItem {
 	 * the page name and fragment (transformed by mw.Title's text function).
 	 * Text can be prepended, e.g. "to ". In all cases, returns an empty string
 	 * if the target is invalid or not shown for the selected result.
-	 * 
+	 *
 	 * @param {String} [format] "raw" or omitted
 	 *  @param {Boolean} [format.raw] use "raw" format
 	 *  @param {String} [format.prepend] text to prepend if target is valid/shown
@@ -164,7 +164,7 @@ class ResultItem {
 	isSpeedy() {
 		return this.showSpeedyResult && this.speedyResult;
 	}
-	
+
 	/**
 	 * @returns {Boolean}
 	 */
@@ -178,7 +178,7 @@ class ResultItem {
 	isSoftDelete() {
 		return this.isSoft() && this.selectedResultName === "delete";
 	}
-	
+
 	/**
 	 * @returns {Boolean}
 	 */

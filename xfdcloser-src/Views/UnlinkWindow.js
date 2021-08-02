@@ -16,11 +16,10 @@ OO.mixinClass( UnlinkWindow, DraggableMixin );
 
 UnlinkWindow.static.name = "unlink";
 UnlinkWindow.static.title = () => $("<span>").css({"font-weight":"normal"}).append(
-	$("<a>").css({"font-weight": "bold"}).attr({"href": mw.util.getUrl("WP:XFDC"), "target": "_blank"}).text("XFDcloser"),
-	"/Unlink (",
-	$("<a>").attr({"href": mw.util.getUrl("WT:XFDC"), "target": "_blank"}).text("talk"),
-	") ",
-	$("<span>").css({"font-size":"90%"}).text("v"+appConfig.script.version)
+	$("<a>").css({"font-weight": "bold"}).attr({"href": mw.util.getUrl("WP:TBx-Manager"), "target": "_blank"}).text("TBx-Manager"),
+	" (",
+	$("<span>").css({"font-size":"90%"}).text("v"+appConfig.script.version),
+	")"
 );
 UnlinkWindow.static.size = "large";
 UnlinkWindow.static.actions = [
@@ -62,7 +61,7 @@ UnlinkWindow.prototype.initialize = function () {
 		expanded: false
 	} );
 
-	this.$body.append( this.stackLayout.$element );	
+	this.$body.append( this.stackLayout.$element );
 
 	// Handle certain keyboard events. Requires something in the window to be focused,
 	// so add a tabindex to the body and it's parent container.

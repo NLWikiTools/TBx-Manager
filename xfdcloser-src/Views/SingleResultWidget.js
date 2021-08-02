@@ -19,7 +19,7 @@ function SingleResultWidget(model, config) {
 
 	this.buttonSelect = new OO.ui.ButtonSelectWidget();
 	this.speedyOption = new OO.ui.CheckboxMultioptionWidget( {
-		data: {name:"speedy", prefix: "speedy "},
+		data: {name:"speedy", prefix: "direct "},
 		label: "Direct"
 	} );
 	this.softOption = new OO.ui.CheckboxMultioptionWidget( {
@@ -27,7 +27,7 @@ function SingleResultWidget(model, config) {
 		label: "Soft"
 	} );
 	this.deleteFirstOption = new OO.ui.CheckboxMultioptionWidget( {
-		data: {name:"deleteFirst", prefix: "delete and "},
+		data: {name:"deleteFirst", prefix: "verwijderen en "},
 		label: "Eerst verwijderen"
 	} );
 	this.optionsMultiselect = new OO.ui.CheckboxMultiselectWidget( {
@@ -45,7 +45,7 @@ function SingleResultWidget(model, config) {
 	this.targetInput = new OO.ui.TextInputWidget( {
 		label: "naar:",
 		labelPosition: "before",
-		classes: ["padLeft2em"],
+		classes: ["padLeft4em"],
 		validate: function(val) {
 			return mw.Title.newFromText(val) !== null;
 		}

@@ -16,7 +16,9 @@ OO.mixinClass( PrefsWindow, DraggableMixin );
 PrefsWindow.static.name = "prefs";
 PrefsWindow.static.title = () => $("<span>").css({"font-weight":"normal"}).append(
 	$("<a>").css({"font-weight": "bold"}).attr({"href": mw.util.getUrl("WP:TBx-Manager"), "target": "_blank"}).text("TBx-Manager"),
-	$("<span>").css({"font-size":"90%"}).text("v"+appConfig.script.version)
+	" (",
+	$("<span>").css({"font-size":"90%"}).text("v"+appConfig.script.version),
+	")"
 );
 PrefsWindow.static.size = "large";
 PrefsWindow.static.actions = [
