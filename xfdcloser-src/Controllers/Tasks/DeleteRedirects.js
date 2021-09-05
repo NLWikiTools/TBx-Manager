@@ -10,9 +10,9 @@ export default class DeleteRedirects extends TaskItemController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {Object[]} pages page objects from Api
-	 * @returns {Object<string,string[]>|Promise<Object<string,string[]>>} Object (or promise of object) of page name arrays for keys "titles" and "talkTitles" 
+	 * @returns {Object<string,string[]>|Promise<Object<string,string[]>>} Object (or promise of object) of page name arrays for keys "titles" and "talkTitles"
 	 */
 	titlesFromResponsePages(pages) {
 		const result = {
@@ -41,7 +41,7 @@ export default class DeleteRedirects extends TaskItemController {
 			scrolled: true
 		}).then(action => {
 			if (action !== "show") { return action; }
-			
+
 			return multiButtonConfirm({
 				title: "Warning",
 				message: `Mass action to be peformed: delete ${result.titles.length} redirects:<ul>${
@@ -85,7 +85,7 @@ export default class DeleteRedirects extends TaskItemController {
 			this.model.setDoing();
 			const deleteRedirectsPromise = this.api.deleteWithRetry(
 				result.titles,
-				{ reason: this.model.getEditSummary({prefix: "[[WP:G8|G8]] (redirect):"}) },
+				{ reason: this.model.getEditSummary({prefix: "Doorverwijzing naar verwijderde pagina:"}) },
 				() => this.model.trackStep(),
 				(code, error, title) => this.handlePageError(code, error, title, "delete")
 			).catch(
@@ -93,7 +93,7 @@ export default class DeleteRedirects extends TaskItemController {
 			);
 			const deleteTalkpagesPromise = result.talkTitles.length && this.api.deleteWithRetry(
 				result.talkTitles,
-				{ reason: this.model.getEditSummary({prefix: "[[WP:G8|G8]] (talk page of redirect):"}) },
+				{ reason: this.model.getEditSummary({prefix: "Overlegpagina van verwijderde doorverwijzing:"}) },
 				() => this.model.trackStep(),
 				(code, error, title) => this.handlePageError(code, error, title, "delete")
 			).catch(

@@ -26,12 +26,12 @@ let mwConfig = mw.config.get( [
 // Set custom version of namespaces with description for namespace 0
 mwConfig.namespaces = $.extend({}, mwConfig.wgFormattedNamespaces, {0: "article"});
 // Month names - no longer provided by mw.config, see phab:T219340
-const months = ["", "januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
+const months = ["", "jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
 
 let config = {
 	// Script info
 	script: {
-		advert: `([[WP:TBXM#${scriptVersion}|TBx-Manager]])`,
+		advert: "",
 		version: scriptVersion
 	},
 	// Mobile site detection, as that requires some special handling

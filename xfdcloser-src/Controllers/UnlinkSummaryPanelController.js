@@ -46,7 +46,7 @@ class UnlinkSummaryPanelController {
 			API.get({
 				action: "parse",
 				contentmodel: "wikitext",
-				summary: `Removing link(s): ${this.model.summary} ${appConfig.script.advert}`,
+				summary: `Ontlinken: ${this.model.summary} ${appConfig.script.advert}`,
 				prop: "text",
 				disablelimitreport: 1,
 				format: "json",

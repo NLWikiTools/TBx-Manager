@@ -6,7 +6,6 @@ import CloseDiscussion from "../Controllers/Tasks/CloseDiscussion";
 import DeletePages from "../Controllers/Tasks/DeletePages";
 import DeleteRedirects from "../Controllers/Tasks/DeleteRedirects";
 import DeleteTalkpages from "../Controllers/Tasks/DeleteTalkpages";
-import Disambiguate from "../Controllers/Tasks/Disambiguate";
 import GetRelistInfo from "../Controllers/Tasks/GetRelistInfo";
 import Redirect from "../Controllers/Tasks/Redirect";
 import RemoveCircularLinks from "../Controllers/Tasks/RemoveCircularLinks";
@@ -21,7 +20,7 @@ import UpdateOldLogPage from "../Controllers/Tasks/UpdateOldLogPage";
 
 const controllers = {
 	AddBeingDeleted, AddMergeTemplates, AddOldXfd, CloseDiscussion, DeletePages,
-	DeleteRedirects, DeleteTalkpages, Disambiguate, GetRelistInfo, Redirect, RemoveCircularLinks,
+	DeleteRedirects, DeleteTalkpages, GetRelistInfo, Redirect, RemoveCircularLinks,
 	RemoveNomTemplates,	TagTalkWithSpeedy, UnlinkBacklinks, UpdateDiscussion, UpdateNewLogPage,
 	UpdateNomTemplates, UpdateOldLogPage
 };

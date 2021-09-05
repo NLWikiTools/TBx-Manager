@@ -5,7 +5,7 @@ import API from "../api";
 
 class SanityChecks {
 	/**
-	 * 
+	 *
 	 * @param {Object} config
 	 *  @param {Discussion} config.discussion
 	 *  @param {Result} config.result
@@ -27,34 +27,34 @@ class SanityChecks {
 	}
 
 	/**
-	 * 
-	 * @param {boolean} isOld 
+	 *
+	 * @param {boolean} isOld
 	 * @param {boolean} isRelisted
 	 * @returns {String[]} Warnings, or empty array if there are no warnings
 	 */
 	static date(isOld, isRelisted) {
 		if ( !isOld && !isRelisted ) {
-			return ["It has not yet been 7 days since the discussion was listed."];
+			return ["Het is minder dan 14 dagen geleden dat deze nominatie is geplaatst."];
 		}
 		return [];
 	}
 
 	/**
-	 * 
-	 * @param {string[]} actions 
+	 *
+	 * @param {string[]} actions
 	 * @param {number} numPages
 	 * @returns {string[]} Warnings, or empty array if there are no warnings
 	 */
 	static massActions(actions, numPages) {
 		if ( actions.some(action => action !== "noActions") && numPages > 3) {
-			return [`Mass actions will be peformed (${numPages} nominated pages detected).`];
+			return [`Massale actie wordt uitgevoerd (${numPages} genomineerde pagina's gedetecteerd).`];
 		}
 		return [];
 	}
 
 	/**
-	 * 
-	 * @param {String[]} pageNames 
+	 *
+	 * @param {String[]} pageNames
 	 * @param {Number[]|null} expectedNamespaceNumbers
 	 * @returns {String[]} Warnings, or empty array if there are no warnings
 	 */
@@ -72,8 +72,8 @@ class SanityChecks {
 	}
 
 	/**
-	 * 
-	 * @param {String[]} targets 
+	 *
+	 * @param {String[]} targets
 	 * @param {Number[]|null} expectedNamespaceNumbers
 	 * @returns {String[]} Warnings, or empty array if there are no warnings
 	 */

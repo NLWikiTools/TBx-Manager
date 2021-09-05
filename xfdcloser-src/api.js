@@ -11,7 +11,7 @@ import * as prefs from "./prefs";
  */
 class API extends mw.Api {
 	/**
-	 * @param {String} apiUserAgent 
+	 * @param {String} apiUserAgent
 	 */
 	constructor(apiUserAgent) {
 		super({ ajax: { headers: { "Api-User-Agent": apiUserAgent } } });
@@ -42,6 +42,7 @@ class API extends mw.Api {
 						watchlist,
 						// Protect against errors and conflicts
 						assert: "user",
+						tags: "tbxm",
 						basetimestamp: editParams.redirect ? null : basetimestamp, // basetimestamp of a redirect should not be used if editing the redirect's target
 						starttimestamp: starttime
 					};
@@ -73,10 +74,10 @@ class API extends mw.Api {
 					if (onEachFail) {
 						onEachFail(code, error, page.title);
 					}
-					return rejection(code, error, page.title);			
+					return rejection(code, error, page.title);
 				});
 		};
-		
+
 		const doGetQuery = (titles, isRetry) => {
 			const baseQuery = {
 				action: "query",
@@ -93,12 +94,12 @@ class API extends mw.Api {
 				...getParams
 			}).then(response => {
 				const starttime = response.curtimestamp;
-				// Get an array of promises of edits (which may either be resolved or rejected)				
+				// Get an array of promises of edits (which may either be resolved or rejected)
 				const pages = response.query.pages.map(page => processPage({
 					...page,
-					content: page.revisions && page.revisions[0].slots.main.content 
+					content: page.revisions && page.revisions[0].slots.main.content
 				}, starttime));
-				
+
 				// Convert the array of promises into a single promise, resolved if all were
 				// resolved, or rejected with an array of errors of all that failed.
 				return $.when.apply(
@@ -109,7 +110,7 @@ class API extends mw.Api {
 						return page.then(
 							() => ({success: true}),
 							(code, error, title) => ({
-								success: false, 
+								success: false,
 								code: code,
 								error: error,
 								title: title
@@ -148,7 +149,7 @@ class API extends mw.Api {
 	 */
 	deleteWithRetry(pages, options, onEachSuccess, onEachFail) {
 		const deletePage = (titleOrId, isRetry) => {
-			const baseQuery = {action: "delete"};
+			const baseQuery = {action: "delete", tags: "tbxm"};
 			if (typeof titleOrId === "number") {
 				baseQuery.pageid = titleOrId;
 			} else {
@@ -172,11 +173,11 @@ class API extends mw.Api {
 				}
 			);
 		};
-		
+
 		const deletionPromises = Array.isArray(pages)
 			? pages.map(page => deletePage(page))
 			: [deletePage(pages)];
-		
+
 		return $.when.apply(null, deletionPromises)
 			.then(function() {
 				var args = Array.prototype.slice.call(arguments);
@@ -192,7 +193,7 @@ class API extends mw.Api {
 	/**
 	 * @param {Object} params query parameters
 	 * @param {String} [method] method for sending query, default if not specified is "get"
-	 * @returns {Promise} recursively merged query responses 
+	 * @returns {Promise} recursively merged query responses
 	 */
 	queryWithContinue(params, method) {
 		const baseQuery = {

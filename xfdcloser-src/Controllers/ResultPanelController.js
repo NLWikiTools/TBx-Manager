@@ -17,14 +17,12 @@ class ResultPanelController {
 		this.rationaleFieldset = widgets.rationaleFieldset,
 		this.copyButton = widgets.copyButton;
 		this.rationaleTextbox = widgets.rationaleTextbox;
-		this.newSentenceOption = widgets.newSentenceOption;
 		this.preview = widgets.preview;
 
 		this.model.connect(this, {update: "updateFromModel"});
 		this.resultSummary.connect(this, {change: "onResultSummaryChange"});
 		this.copyButton.connect(this, {click: "onCopyButtonClick"});
 		this.rationaleTextbox.connect(this, {change: "onRationaleChange"});
-		this.newSentenceOption.connect(this, {change: "onNewSentenceChange"});
 
 		this._latestPreviewWikitext = "";
 		this._latestRequestId = 0;
@@ -38,7 +36,6 @@ class ResultPanelController {
 		this.rationaleFieldset.setLabel(this.model.rationaleHeading);
 		this.copyButton.toggle(this.model.showCopyButton);
 		this.rationaleTextbox.setValue(this.model.rationale);
-		this.newSentenceOption.setSelected(this.model.newSentence).toggle(this.model.showNewSentenceOption);
 		this.preview.$element.html(this.model.preview);
 
 		// update notes from model
@@ -61,11 +58,11 @@ class ResultPanelController {
 				} );
 			})
 		);
-		
+
 		// update preview from model
 		const wikitext = this.model.previewWikitext;
 		if ( this._latestPreviewWikitext === wikitext ) {
-			// Wikitext has not changed since it was last parsed 
+			// Wikitext has not changed since it was last parsed
 			return;
 		}
 		this._latestPreviewWikitext = wikitext;

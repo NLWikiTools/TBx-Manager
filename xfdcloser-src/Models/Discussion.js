@@ -99,7 +99,7 @@ class Discussion {
 
 	setWindowOpened(type) {
 		this.type = type;
-		this.status = type.slice(0,1).toUpperCase() + type.slice(1).replace(/e$/, "") + "en beoordeling...";
+		this.status = "sluiten beoordeling...";
 		this.showStatus = true;
 		this.emit("update");
 	}
@@ -110,9 +110,9 @@ class Discussion {
 			this.status = `<strong>Aborted</strong> during ${this.type}; check ${makeLink("Special:MyContributions", "jouw bijdragen")} to see which actions were already completed.`;
 			break;
 		case windowData && windowData.success: {
-			const actioned = this.type.slice(0,1).toUpperCase() + this.type.slice(1).replace(/e$/, "") + "ed";
-			const as = windowData.result ? ` as "${windowData.result}"` : "";
-			this.status = `<strong>${actioned}</strong>${as} (reload page to see the actual ${this.type})`;
+			const actioned = "Afgehandeld";
+			const as = windowData.result ? ` als "${windowData.result}"` : "";
+			this.status = `<strong>${actioned}</strong>${as} (herlaad pagina om afhandeling te bekijken)`;
 			this.actioned = true;
 			break;
 		}

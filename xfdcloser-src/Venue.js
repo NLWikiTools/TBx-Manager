@@ -126,10 +126,10 @@ Venue.Tfd = () => {
 // AFD
 Venue.Afd = transcludedOnly => new Venue("afd", {
 	type:		 "afd",
-	path:		 "Wikipedia:Te beoordelen pagina's/",
+	path:		 "Wikipedia:Te beoordelen pagina's",
 	subpagePath: "Wikipedia:Te beoordelen pagina's/",
 	hasIndividualSubpages: true,
-	ns_number:	 [0], // main
+	ns_number:	 [0, 1, 2, 3, 4, 5, 7, 8, 9, 11, 12, 13, 14, 15, 100, 101, 829, 2300, 2301, 2302, 2303],
 	ns_logpages: 4, // Wikipedia
 	ns_unlink:   ["0", "100"], // Hoofd, Portaal
 	html: {

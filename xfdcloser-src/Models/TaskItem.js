@@ -7,7 +7,7 @@ const indeterminateProgress = false;
 
 class TaskItem {
 	/**
-	 * 
+	 *
 	 * @param {Object} config
 	 *  @param {String} config.taskName Name of task controller
 	 *  @param {String[]} [config.relaventPageNames]
@@ -73,14 +73,14 @@ class TaskItem {
 			return this.displayName;
 		} else if ( this.aborted && !this.done ) {
 			message = this.steps.completed
-				? `Aborted (after completing ${completedOutOfTotal})`
+				? `Afgebroken (${completedOutOfTotal} uitgevoerd)`
 				: "Aborted";
 		} else if ( this.failed || this.steps.failed === this.steps.total ) {
-			message = `Failed (completed ${completedOutOfTotal})`;
+			message = `Mislukt (${completedOutOfTotal} uitgevoerd)`;
 		} else if ( this.done ) {
 			message = this.steps.completed
-				? `Done! (${completedOutOfTotal})`
-				: "Skipped" + ( this.steps.skipped ? ` (${this.steps.skipped})` : "");
+				? `Uitgevoerd! (${completedOutOfTotal})`
+				: "Overgeslagen" + ( this.steps.skipped ? ` (${this.steps.skipped})` : "");
 		}
 		return message ? `${this.displayName}: ${message}` : this.displayName;
 	}
@@ -88,11 +88,11 @@ class TaskItem {
 		if ( this.aborted || this.done || this.failed ) {
 			return [];
 		} else if ( !this.started ) {
-			return ["Waiting..."];
+			return ["Wachten..."];
 		} else if ( this.steps.total === 0 ) {
-			return ["Doing..."];
+			return ["Bezig..."];
 		} else {
-			return [`Doing... (${this.steps.completed} / ${this.steps.total})`];
+			return [`Bezig... (${this.steps.completed} / ${this.steps.total})`];
 		}
 	}
 
@@ -101,17 +101,17 @@ class TaskItem {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {Object} [options]
 	 *  @param {String} [options.prefix] Text to insert at start
-	 *  @param {Boolean} [options.short] Use a shortered form (omit the "closed as {result}" part) 
+	 *  @param {Boolean} [options.short] Use a shortered form (omit the "closed as {result}" part)
 	 */
 	getEditSummary(options) {
 		options = options || {};
 		const prefix = options.prefix ? options.prefix + " " : "";
 		const main = this.summary || options.short
-			? `[[${this.discussion.discussionPageLink}]]`
-			: `[[${this.discussion.discussionPageLink}]] closed as ${this.result.getResultText()}`;
+			? `Per [[${this.discussion.discussionPageLink}]]`
+			: `${this.result.getResultText()} per [[${this.discussion.discussionPageLink}]]`;
 		return prefix + main + " " + appConfig.script.advert;
 	}
 
@@ -137,7 +137,7 @@ class TaskItem {
 
 	/**
 	 * Set the displayed name of the task
-	 * @param {String} name 
+	 * @param {String} name
 	 */
 	setName(name) {
 		this.displayName = name;
@@ -166,7 +166,7 @@ class TaskItem {
 		this.emit("update");
 	}
 	/**
-	 * 
+	 *
 	 * @param {TaskItem} task Task which must preceed this task
 	 * @param {String} requiredState Property name of task which must be true for this task to proceed, e.g. "done", "doing"
 	 */
@@ -186,7 +186,7 @@ class TaskItem {
 		}
 		const { task, requiredState } = this.precedingTask;
 		return !!task[requiredState];
-	} 
+	}
 	start() {
 		if ( this.starting ) return false;
 		this.starting = true;

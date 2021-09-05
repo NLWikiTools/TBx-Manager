@@ -72,7 +72,7 @@ class Result {
 				expanded: false
 			});
 		} else {
-			const pageCount = this.discussion.pages.length === 1 ? "1 page" : `${this.discussion.pages.length} pages`;
+			const pageCount = this.discussion.pages.length === 1 ? "1 pagina" : `${this.discussion.pages.length} pagina's`;
 			this.topNotes.push({
 				name: "discussionPages",
 				title: `Nominatie: ${this.discussion.sectionHeader} (${pageCount})`,
@@ -134,7 +134,7 @@ class Result {
 	 * @param {Boolean} rationaleHeading
 	 */
 	get rationaleHeading() {
-		return this.type === "close" ? "Conclusie" : "Verlengingsreden";
+		return this.type === "close" ? "Toelichting" : "Verlengingsreden";
 	}
 
 	/**
@@ -185,10 +185,6 @@ class Result {
 		}
 		const firstChar = text.slice(0,1);
 		const needsLinebreak = firstChar === "*" || firstChar === ":" || firstChar === ";";
-		if ( format === "punctuated" ) {
-			const isNewSentence = this.newSentence && this.showNewSentenceOption;
-			return `${isNewSentence ? "." : ""}${needsLinebreak ? "\n" : " "}${text}`;
-		}
 		return ( needsLinebreak ? "\n" : "" ) + ( format === "escaped"
 			? text.replace(/(\|)(?!(?:[^[]*]|[^{]*}))/g, "&#124;")
 			: text

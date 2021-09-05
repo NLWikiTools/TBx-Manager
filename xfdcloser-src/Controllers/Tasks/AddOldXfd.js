@@ -40,7 +40,7 @@ export default class AddOldXfdTask extends TaskItemController {
 		//Parts of this derived from https://en.wikipedia.org/wiki/User:Mr.Z-man/closeAFD2.js
 		const titleObject = mw.Title.newFromText(pageTitle);
 		const PAGENAME = titleObject.getMain();
-		const SUBJECTPAGENAME = titleObject.getSubjectPage().getNamespacePrefix() +	PAGENAME; 
+		const SUBJECTPAGENAME = titleObject.getSubjectPage().getNamespacePrefix() +	PAGENAME;
 		let oldafdmulti = "{{Behouden";
 		let count = 0;
 		let oldAfdTemplate;
@@ -117,7 +117,7 @@ export default class AddOldXfdTask extends TaskItemController {
 		if ( this.model.venue.type !== "afd" && count === 0 ) {
 			return this.makeOldxfdWikitext() + wikitext;
 		}
-		
+
 		// Otherwise, add current discussion to oldafdmulti
 		count++;
 		const currentCount = count === 1 ? "" : count.toString();
@@ -125,7 +125,7 @@ export default class AddOldXfdTask extends TaskItemController {
 		const page = this.model.venue.type === "afd"
 			? this.model.discussion.discussionSubpageName
 			: this.model.discussion.discussionPageLink;
-			
+
 		oldafdmulti += `|datum${currentCount}=${dmyDateString(this.model.discussion.nominationDate)}|pagina${currentCount}=${page}}}`;
 
 		if ( oldAfdTemplate ) {
@@ -155,14 +155,14 @@ export default class AddOldXfdTask extends TaskItemController {
 		}
 		const baseEditParams = {
 			section: "0",
-			summary: this.model.getEditSummary({prefix: `Old ${this.model.venue.type.toUpperCase()}:`})
+			summary: this.model.getEditSummary({prefix: "Mededeling:"})
 		};
-		
+
 		// Required edit params vary based on talk page redirect status and venue
 		switch(true) {
 		case page.redirect && this.model.venue.type === "rfd":
 			// Redirect at RfD: ask what to to do
-			return OO.ui.confirm(`"${page.title}" is currently a redirect. Okay to replace with Old RFD template?`)
+			return OO.ui.confirm(`"${page.title}" is op dit moment een doorverwijzing. Is het goed om deze te vervangen voor het {{behouden}}-sjabloon?`)
 				.then( confirmed => {
 					if (!confirmed) {
 						return $.Deferred().reject("skipped");

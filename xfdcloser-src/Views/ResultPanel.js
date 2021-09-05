@@ -11,7 +11,7 @@ import SingleResultWidget from "./SingleResultWidget";
  * @param {String} config.sectionHeader Discussion section header
  * @param {Boolean} config.isBasicMode
  * @param {mw.Title[]} config.pages mw.Title objects for each nominated page
- * @param {String} config.type "close" or "relist" 
+ * @param {String} config.type "close" or "relist"
  * @param {Object} config.user Object with {String}sig, {string}name, {boolean}isSysop
  * @param {String} config.venue code for venue, e.g. "afd"
  * @param {String} config.nomPageLink Nomination page link target, with #section anchor if appropriate
@@ -29,7 +29,7 @@ function ResultPanel( config, model ) {
 	this.notesFieldset = new OO.ui.FieldsetLayout();
 
 	// Result(s)
-	this.resultFieldset = new OO.ui.FieldsetLayout({label: "Result"});
+	this.resultFieldset = new OO.ui.FieldsetLayout({label: "Conclusie"});
 	// Single-mode result
 	this.singleResultWidget = new SingleResultWidget(
 		this.model.singleModeResult,
@@ -64,15 +64,10 @@ function ResultPanel( config, model ) {
 	this.rationaleTextbox = new OO.ui.MultilineTextInputWidget( {
 		rows: 3
 	} );
-	this.newSentenceOption = new OO.ui.CheckboxMultioptionWidget( {
-		label: "Besluit is nieuwe regel",
-		selected: true
-	} );
 	this.rationaleWidget = new OO.ui.Widget();
 	this.rationaleWidget.$element.append(
 		this.copyButton.$element,
-		this.rationaleTextbox.$element,
-		this.newSentenceOption.$element
+		this.rationaleTextbox.$element
 	);
 	this.rationaleFieldset.addItems(
 		new OO.ui.FieldLayout( this.rationaleWidget, {
@@ -93,7 +88,7 @@ function ResultPanel( config, model ) {
 			align: "top"
 		})
 	);
-	
+
 	this.$element.append(
 		this.notesFieldset.$element,
 		this.resultFieldset.$element,

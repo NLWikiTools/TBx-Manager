@@ -6,6 +6,7 @@ const resultsData = [
 	// Keep
 	{
 		name: "keep",
+		tag: "behouden",
 		label: "Behouden",
 		title: "Sluit beoordeling met resultaat \"behouden\"",
 		allowSpeedy: true,
@@ -16,6 +17,7 @@ const resultsData = [
 	// Delete
 	{
 		name: "delete",
+		tag: "verwijderd",
 		label: "Verwijderen",
 		title: "Sluit beoordeling met resultaat \"verwijderen\"",
 		allowSpeedy: true,
@@ -27,6 +29,7 @@ const resultsData = [
 	// Redirect
 	{
 		name: "redirect",
+		tag: "doorverwezen",
 		label: "Doorverwijzen",
 		title: "Sluit beoordeling met resultaat \"doorverwijzing\"",
 		requireTarget: true,
@@ -39,6 +42,7 @@ const resultsData = [
 	// Rename
 	{
 		name: "rename",
+		tag: "hernoemd",
 		label: "Hernoemen",
 		title: "Sluit beoordeling met resultaat \"hernoemen\"",
 		requireTarget: true,
@@ -102,7 +106,7 @@ const prefs = [{
 	default: false
 }, {
 	name: "watchlist",
-	label: "Voeg bewerkte pagina's toe aan volglijst",
+	label: "Voeg pagina's toe aan volglijst",
 	type: "dropdown",
 	options: [{
 		data: "preferences",
@@ -121,16 +125,16 @@ const prefs = [{
 	label: "Schakel ontlinken standaard in",
 	sysopOnly: true,
 	type: "toggle",
-	default: true
+	default: false
 }, {
 	name: "collapseWarnings",
-	label: "Klap taak-waarschuwingen bij meer dan:",
+	label: "Groepeer waarschuwingen bij meer dan:",
 	type: "number",
 	min: 2,
 	default: 5
 }, {
 	name: "collapseErrors",
-	label: "Klap taak-fouten bij meer dan:",
+	label: "Groepeer foutmeldingen bij meer dan:",
 	type: "number",
 	min: 2,
 	default: 5

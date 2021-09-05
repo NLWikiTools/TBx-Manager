@@ -6,7 +6,7 @@ import Month from "./Month";
 /**
  * Escape html tag characters, replacing with ampersand-encoded versions
  * @param {String} string
- * @returns {String} escaped string 
+ * @returns {String} escaped string
  */
 const escapeHtml = function(string) {
 	return string.replace(/['"<>&]/g, function (char) {
@@ -66,7 +66,7 @@ const encodeForWikilinkFragment = function(text) {
  * Un-escapes some HTML tags (<br>, <p>, <ul>, <li>, <hr>, <strong>, <em>, and <pre>);
  * turns wikilinks into real links. Ignores anything within <pre>...</pre> tags -- unless
  * wrapped with {{subst:^|}} (e.g. `{{subst:^|<strong>}}` is replaced with a real <strong> tag).
- * Input will first be escaped using #escapeHtml unless specified 
+ * Input will first be escaped using #escapeHtml unless specified
  * @param {String} text
  * @param {Object} config Configuration options
  *  @param {Boolean} config.noEscape - do not escape the input first
@@ -75,18 +75,18 @@ const encodeForWikilinkFragment = function(text) {
 const safeUnescape = function(text, config) {
 	return ( config && config.noEscape ? text : escapeHtml(text))
 	// Step 1: unescape <pre> tags
-		.replace(  
+		.replace(
 			/&lt;(\/?pre\s?\/?)&gt;/g,
 			"<$1>"
 		)
 	// Step 2: replace piped wikilinks with real links (unless inside <pre> tags)
-		.replace( 
+		.replace(
 			/\[\[([^|\]]*?)\|([^|\]]*?)\]\](?![^<]*?<\/pre>)/g, function(_match, linkTarget, linkText) {
 				return makeLink(linkTarget, linkText);
 			}
 		)
 	// Step 3: replace other wikilinks with real links (unless inside <pre> tags)
-		.replace( 
+		.replace(
 			/\[\[([^|\]]+?)]\](?![^<]*?<\/pre>)/g, function(_match, link) {
 				return makeLink(link);
 			}
@@ -105,7 +105,7 @@ const safeUnescape = function(text, config) {
 
 /**
  * Formats a date object as `d Mmmm YYYY`
- * @param {Date} date 
+ * @param {Date} date
  * @returns {string} formatted date
  */
 const dmyDateString = function(date) {
@@ -118,7 +118,7 @@ const dmyDateString = function(date) {
 /**
  * Formats a date object as `YYYY Mmmm d`
  * @param {Date} date
- * @returns {string} formatted date 
+ * @returns {string} formatted date
  */
 const ymdDateString = function(date) {
 	if (date.constructor.name !== "Date") {
@@ -129,9 +129,9 @@ const ymdDateString = function(date) {
 
 /**
  * Parses a date from its component parts
- * @param {String|Number} year 
+ * @param {String|Number} year
  * @param {String} monthName
- * @param {String|Number} day 
+ * @param {String|Number} day
  * @param {String} [time] time formatted as hh:mm
  * @returns {Date|NaN} Date object, or NaN if date could not be parsed
  */
@@ -147,15 +147,15 @@ const dateFromParts = function(year, monthName, day, time) {
 
 /**
  * Generates a JS Date object from the text of a timestamp
- * @param {String} sigTimestamp in format "`hh`:`mm`, `d` `Month` `yyyy` (UTC)", e.g. "09:42, 11 January 2019 (UTC)"
+ * @param {String} sigTimestamp in format "`d` `Month` `yyyy` `hh`:`mm` (CE[S]T)", e.g. "11 January 2019 09:42 (CET)"
  * @returns {Date|NaN} Date object, or NaN if sigTimestamp could not be parsed
  */
 const dateFromSigTimestamp = function(sigTimestamp) {
-	const parts =  /(\d\d:\d\d), (\d{1,2}) (\w+) (\d\d\d\d) \(UTC\)/.exec(sigTimestamp);
+	const parts =  /(\d{1,2}) (\w+) (\d\d\d\d) (\d\d:\d\d) \(\w+\)/.exec(sigTimestamp);
 	if ( parts === null ) {
 		return NaN;
 	}
-	const [time, day, monthName, year] = parts.slice(1);
+	const [day, monthName, year, time] = parts.slice(1);
 	return dateFromParts(year, monthName, day, time);
 };
 
@@ -212,7 +212,7 @@ const dateFromUserInput = function(text) {
  *  @param {String} config.size  Symbolic name of the dialog size: small, medium, large, larger or full.
  *  @param {Boolean} [config.scrolled]  Whether the dialog should be translated to (and window scrolled to)
  *   the window vertical offset prior to the dialog opening. If not specified or false, the page will scroll
- *   to the top and the dialog will open there.  
+ *   to the top and the dialog will open there.
  * @return {Promise<String>} action taken by user
  */
 const multiButtonConfirm = function(config) {
@@ -292,15 +292,15 @@ const multiCheckboxMessageDialog = function(config) {
 		const action = data && data.action;
 		return {
 			action,
-			items: checkboxMultiselect.findSelectedItemsData() 
+			items: checkboxMultiselect.findSelectedItemsData()
 		};
 	});
 };
 
 /**
  * Checks if the input is a plain javascript object, based on
- * type and constructor 
- * @param {*} obj 
+ * type and constructor
+ * @param {*} obj
  */
 const isPlainObject = function(obj) {
 	return !!obj && typeof obj === "object" && obj.constructor === Object;
@@ -310,8 +310,8 @@ const isPlainObject = function(obj) {
  * Merge two objects recursively, including arrays. Returns a new object without modifying either input.
  * Keys present in both the target and the source take on the value of the source, except if:
  * - both values are plain objects, in which case those objects are merged
- * - both values are arrays, in which case those arrays are merged  
- * 
+ * - both values are arrays, in which case those arrays are merged
+ *
  * @param {Object} target
  * @param {Object} source
  * @returns {Object} merged object
@@ -374,17 +374,17 @@ const uniqueArray = function(array) {
 
 /**
  * Checks if a page is a file (in File: namespace)
- * 
+ *
  * @param {String} pageName
  * @returns {Boolean} page is a module
  */
 const isFile = function(pageName) {
 	return mw.Title.newFromText(pageName).getNamespaceId() === 6;
-}; 
+};
 
 /**
  * Checks if a page is a module (in Module: namespace)
- * 
+ *
  * @param {String} pageName
  * @returns {Boolean} page is a module
  */
@@ -393,8 +393,8 @@ const isModule = function(pageName) {
 };
 
 /**
- * 
- * @param {String} pageName 
+ *
+ * @param {String} pageName
  * @returns {String} page name if not a module, or page name of the /doc subpage
  */
 const moduleToDoc = function(pageName) {
@@ -402,8 +402,8 @@ const moduleToDoc = function(pageName) {
 };
 
 /**
- * 
- * @param {String} pageName 
+ *
+ * @param {String} pageName
  * @returns {String} page name if not a module, or page name without the /doc subpage
  */
 const docToModule = function(pageName) {
@@ -414,7 +414,7 @@ const docToModule = function(pageName) {
  * Decodes HTML entities, e.g. "this &amp; that" to "this & that".
  * Also strips any HTML tags, leaving only the text content, e.g
  * "foo <strong>bar</strong> baz" to "foo bar baz"
- * 
+ *
  * @param {String} t text
  * @returns {string} decoded text
  */
@@ -425,7 +425,7 @@ const decodeHtml = function(t) {
 /**
  * Uppercases the first character of a string
  * @param {String} text
- * @returns {String} text with the initial character uppercased 
+ * @returns {String} text with the initial character uppercased
  */
 function uppercaseFirst(text) {
 	return text.slice(0, 1).toUpperCase() + text.slice(1);
@@ -434,7 +434,7 @@ function uppercaseFirst(text) {
 /**
  * Returns the most frequently occuring item within an array,
  * e.g. `mostFrequent(["apple", "apple", "orange"])` returns `"apple"`
- * @param {string[]|number[]} array 
+ * @param {string[]|number[]} array
  * @returns {string|null} item with the highest frequency
  */
 function mostFrequent(array) {
@@ -453,9 +453,9 @@ function mostFrequent(array) {
 
 /**
  * Normalises a page name (full namespace, initial caps, etc).
- * Fragments are retained, e.g "wp:foo#Section" => "Wikpedia:Foo#Section" 
+ * Fragments are retained, e.g "wp:foo#Section" => "Wikpedia:Foo#Section"
  * @param {String} pageName
- * @returns {String|null} Normalised page name, or null if invalid 
+ * @returns {String|null} Normalised page name, or null if invalid
  */
 const normalisePageName = function(pageName) {
 	const title = mw.Title.newFromText(pageName);
@@ -484,7 +484,7 @@ const windowOffsetTop = function() {
  */
 const cleanupVoidTemplates = function(wikitext) {
 	return wikitext.replace(/\{\{subst:(?:\^|void)[^}]*\}\}/gi, "");
-}; 
+};
 
 export {
 	encodeForUrl,

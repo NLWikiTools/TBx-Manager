@@ -119,7 +119,7 @@ class ResultItem {
 			( this.isSoft() && "soft " ) ||
 			( this.isDeleteFirst() && "verwijderen en ")
 		);
-		return ( prefix || "" ) + this.selectedResultName;
+		return ( prefix || "" ) + this.selectedResult.tag;
 	}
 
 	/**

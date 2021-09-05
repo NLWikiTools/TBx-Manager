@@ -85,7 +85,7 @@ function DiscussionView(model) {
 	this.buttonGroup = new OO.ui.ButtonGroupWidget({
 		items: [
 			this.closeButton,
-			this.relistButton,
+			//this.relistButton,
 		]
 	});
 	this.buttonGroup.$element.css({margin: "-1em 0"}); // Avoids excess whitespace when added to DOM
@@ -224,7 +224,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 	} else {
 		// AFD, FFD, TFD: nominated page links inside span with classes plainlinks, nourlexpansion
 		pages = $discussionNodes
-			.next("div")
+			.next("div.tbp-links")
 			.find(venue.html.listitem + " > span.tbp-extra-links > span.tbxm")
 			.children("a")
 			.filter(":first-child")
@@ -257,7 +257,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 			return;
 		}
 		// Find first timestamp date
-		const firstDateMatch = /(?:\d\d:\d\d, )(\d{1,2} \w+ \d{4})(?: \(UTC\))/.exec(discussionText);
+		const firstDateMatch = /(\d{1,2} \w+ \d{4})(?: \d\d:\d\d )(?:\((?:CET|CEST)\))/.exec(discussionText);
 		const firstDateString = firstDateMatch && firstDateMatch[1];
 		if (firstDateString) {
 			firstDate = dateFromParts.apply(null, firstDateString.split(" ").reverse() );
@@ -273,7 +273,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 	// Check age (since last relist, or since transclusion)
 	const notTranscludedCorrectlyMatch = discussionText.match(/(?:Automated|Procedural) (?:comment|Note).*transcluded.*/i);
 	const notTranscludedCorrectlyComment = notTranscludedCorrectlyMatch && notTranscludedCorrectlyMatch[0];
-	const timestampPatt = /\d\d:\d\d, \d{1,2} \w+ \d{4} \(UTC\)/;
+	const timestampPatt = /\d{1,2} \w+ \d{4} \d\d:\d\d \((?:CET|CEST)\)/;
 	const listingTimestampMatch = (
 		lastRelist.match(timestampPatt) ||
 		notTranscludedCorrectlyComment && notTranscludedCorrectlyComment.match(timestampPatt) ||
@@ -284,7 +284,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 		classes.push("xfdc-unknownAge");
 	} else {
 		const millisecondsSinceListing = new Date() - listingTimestampDate;
-		const discussionRuntimeDays = 7;
+		const discussionRuntimeDays = 14;
 		const discussionRuntimeMilliseconds = discussionRuntimeDays * 24 * 60 * 60 * 1000;
 		isOld = millisecondsSinceListing > discussionRuntimeMilliseconds;
 		classes.push(isOld ? "xfdc-old" : "xfdc-notOld");

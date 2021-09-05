@@ -21,7 +21,7 @@ export default class  UnlinkBacklinks extends TaskItemController {
 		);
 	}
 	/**
-	 * 
+	 *
 	 * @param {Object[]} list backlink and imageusage objects from Api
 	 * @returns {String[]} page names of redirects
 	 */
@@ -37,7 +37,7 @@ export default class  UnlinkBacklinks extends TaskItemController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {String} pageName
 	 * @returns {Object<string,string|string[]|number>} Query parameters for backlinks and if applicable image usage
 	 */
@@ -66,7 +66,7 @@ export default class  UnlinkBacklinks extends TaskItemController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {Object[]} backlinks backlinks objects from Api
 	 * @param {Object[]} imageusage imageusage objects from Api
 	 */
@@ -85,7 +85,7 @@ export default class  UnlinkBacklinks extends TaskItemController {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {Object} selection Selection from multiCheckboxMessageDialog
 	 *  @param {String} selection.action Action selected by user, "accept" or "reject"
 	 *  @param {String[]} selection.item Page names selected by user
@@ -128,9 +128,9 @@ export default class  UnlinkBacklinks extends TaskItemController {
 
 		return $.when.apply(null, editPromises);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param {Object} page Page object from Api
 	 * @returns {Promise<Object<string,string|number>} Edit parameters
 	 */
@@ -210,9 +210,6 @@ export default class  UnlinkBacklinks extends TaskItemController {
 			if ( action === "keep" ) {
 				// Remove the void from the start of the line
 				wikitext = wikitext.replace(/^{{subst:void}}/m, "");
-			} else if ( action === "keep-cite" ) {
-				// Remove the void from the start of the line, add citation needed at the end
-				wikitext = wikitext.replace(/^{{subst:void}}(.*)(\n?)/m, "$1{{subst:Citation needed}}$2");
 			} else {
 				// Remove the whole line, mark as a major edit
 				wikitext = wikitext.replace(/^{{subst:void}}.*\n?/m, "");
@@ -225,7 +222,7 @@ export default class  UnlinkBacklinks extends TaskItemController {
 
 	/**
 	 * Queue a multiButtonConfirm prompt to be shown, after waiting for any other queued prompts to be resolved
-	 *   
+	 *
 	 * @param {*} params Parameters for multiButtonConfirm
 	 * @returns {Promise<String>} action selected by user
 	 */
