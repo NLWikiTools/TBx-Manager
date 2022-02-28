@@ -7,7 +7,7 @@ import Template from "../../Template";
 export default class AddOldXfdTask extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName(`Updating talk ${model.pageNames.length > 1 ? "pages" : "page"}`);
+		this.model.setName(`${model.pageNames.length > 1 ? "Overlegpagina's" : "Overlegpagina"} bijwerken`);
 	}
 
 	/**

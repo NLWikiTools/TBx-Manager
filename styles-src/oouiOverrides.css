@@ -21,3 +21,8 @@
 .xfdc-taskItemWidget > .oo-ui-fieldLayout-messages {
 	clear: both;
 }
+
+/* Make sure headers fit on the same line */
+.xfdc-taskItemWidget > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-header {
+	width: 80% !important;
+}

@@ -8,7 +8,7 @@ import unlink from "../../unlink";
 export default class  UnlinkBacklinks extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName("Unlinking backlinks");
+		this.model.setName("Ontlinken");
 		this.finishedReadingApi = $.Deferred();
 		this.queuedPrompts = [];
 		this.redirectPageNames = [];
@@ -253,7 +253,7 @@ export default class  UnlinkBacklinks extends TaskItemController {
 				result.imageusage = [];
 			}
 			if ( result.backlinks.length + result.imageusage.length === 0 ) {
-				this.model.addWarning("none found");
+				this.model.addWarning("geen links gevonden");
 				this.model.setTotalSteps(1);
 				this.model.trackStep("skipped");
 				return "Skipped";

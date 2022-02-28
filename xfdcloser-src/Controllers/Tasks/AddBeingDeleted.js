@@ -6,7 +6,7 @@ export default class AddBeingDeleted extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
 		this.model.setName(
-			`Updating ${model.pageNames.length > 1 ? "templates" : "template"}`,
+			`${model.pageNames.length > 1 ? "Sjablonen" : "Sjabloon"} bijwerken`,
 		);
 		this.mergeTargets = [];
 		this.mergeTitles = [];

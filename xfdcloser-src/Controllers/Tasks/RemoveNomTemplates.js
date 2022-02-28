@@ -6,14 +6,14 @@ import { rejection, moduleToDoc, docToModule } from "../../util";
 export default class RemoveNomTemplates extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName(`Updating ${model.pageNames.length > 1 ? "pages" : "page"}`);
+		this.model.setName(`${model.pageNames.length > 1 ? "Pagina's" : "Pagina"} bijwerken`);
 	}
 
 	/**
 	 * Transform a page object into edit parameters for removing a nomination
 	 * template, and optionally prepending addtional content. This is a static
 	 * method so that it can be exported and used with a different context.
-	 * 
+	 *
 	 * @param {TaskItemController} context Context to use for the `this` value
 	 * @param {Object} page Api page object
 	 * @param {String} [prependContent] Additional content to prepend to transformed text
@@ -40,7 +40,7 @@ export default class RemoveNomTemplates extends TaskItemController {
 			// Skip - nothing to change
 			return rejection("nominationTemplateNotFound");
 		}
-		
+
 		// Start building updated wikitext
 		let text;
 		try {

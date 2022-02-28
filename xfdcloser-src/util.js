@@ -147,11 +147,11 @@ const dateFromParts = function(year, monthName, day, time) {
 
 /**
  * Generates a JS Date object from the text of a timestamp
- * @param {String} sigTimestamp in format "`d` `Month` `yyyy` `hh`:`mm` (CE[S]T)", e.g. "11 January 2019 09:42 (CET)"
+ * @param {String} sigTimestamp in format "`d` `Month` `yyyy` `hh`:`mm` (CE[S]T)", e.g. "11 jan 2022 09:42 (CET)"
  * @returns {Date|NaN} Date object, or NaN if sigTimestamp could not be parsed
  */
 const dateFromSigTimestamp = function(sigTimestamp) {
-	const parts =  /(\d{1,2}) (\w+) (\d\d\d\d) (\d\d:\d\d) \(\w+\)/.exec(sigTimestamp);
+	const parts =  /(\d{1,2}) (\w{3}) (\d{4}) (\d\d:\d\d) \(\w{3,4}\)/.exec(sigTimestamp);
 	if ( parts === null ) {
 		return NaN;
 	}

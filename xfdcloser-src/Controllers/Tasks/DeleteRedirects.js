@@ -6,7 +6,7 @@ import { multiButtonConfirm, rejection } from "../../util";
 export default class DeleteRedirects extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName("Deleting redirects");
+		this.model.setName("Doorverwijzingen verwijderen");
 	}
 
 	/**
@@ -74,7 +74,7 @@ export default class DeleteRedirects extends TaskItemController {
 			if ( this.model.aborted ) {
 				return rejection("aborted");
 			} else if ( !response || !response.pages ) {
-				this.model.addWarning("none found");
+				this.model.addWarning("geen doorverwijzingen gevonden");
 				return rejection("Skipped.");
 			}
 			return this.titlesFromResponsePages(response.pages);

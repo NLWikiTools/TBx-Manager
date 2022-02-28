@@ -1,13 +1,13 @@
 // <nowiki>
 export default class Month {
 	/**
-	 * 
-	 * @param {Number} index zero-indexed month number, 0 to 11 
+	 *
+	 * @param {Number} index zero-indexed month number, 0 to 11
 	 */
 	constructor(index) {
 		this.index = index;
 	}
-	static names = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
+	static names = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
 	get name() {
 		return Month.names[this.index];
 	}
@@ -27,8 +27,8 @@ export default class Month {
 	// Alternatives constructors
 
 	/**
-	 * 
-	 * @param {Number} number month number, 1 to 12 
+	 *
+	 * @param {Number} number month number, 1 to 12
 	 */
 	static newFromMonthNumber(number) {
 		const index = number - 1;
@@ -36,7 +36,7 @@ export default class Month {
 		return month;
 	}
 	/**
-	 * 
+	 *
 	 * @param {String} name month's name (capitlisation does not matter)
 	 */
 	static newFromMonthName(monthname) {
@@ -45,7 +45,7 @@ export default class Month {
 		return month;
 	}
 	/**
-	 * 
+	 *
 	 * @param {String} shortname month's short name (capitlisation does not matter), e.g. "Jan", "FEB", "mar"
 	 */
 	static newFromMonthShortName(shortname) {
@@ -56,15 +56,15 @@ export default class Month {
 
 	// Get the name directly without returning a Month object
 	/**
-	 * 
-	 * @param {Number} index zero-indexed month number, 0 to 11 
+	 *
+	 * @param {Number} index zero-indexed month number, 0 to 11
 	 */
 	static nameFromIndex(index) {
 		return (new Month(index)).name;
 	}
 	/**
-	 * 
-	 * @param {Number} number month number, 1 to 12 
+	 *
+	 * @param {Number} number month number, 1 to 12
 	 */
 	static nameFromNumber(number) {
 		return Month.newFromMonthNumber(number).name;
@@ -73,15 +73,15 @@ export default class Month {
 	// Get the short name directly without returning a Month object
 
 	/**
-	 * 
-	 * @param {Number} index zero-indexed month number, 0 to 11 
+	 *
+	 * @param {Number} index zero-indexed month number, 0 to 11
 	 */
 	static shortNameFromIndex(index) {
 		return (new Month(index)).shortName;
 	}
 	/**
-	 * 
-	 * @param {Number} number month number, 1 to 12 
+	 *
+	 * @param {Number} number month number, 1 to 12
 	 */
 	static shortNameFromNumber(number) {
 		return Month.newFromMonthNumber(number).shortName;
@@ -90,14 +90,14 @@ export default class Month {
 	// Get the index directly without returning a Month object
 
 	/**
-	 * 
+	 *
 	 * @param {String} name month's name (capitlisation does not matter)
 	 */
 	static indexFromName(monthname) {
 		return Month.newFromMonthName(monthname).index;
 	}
 	/**
-	 * 
+	 *
 	 * @param {String} shortname month's short name (capitlisation does not matter), e.g. "Jan", "FEB", "mar"
 	 */
 	static indexFromShortName(shortName) {
@@ -107,7 +107,7 @@ export default class Month {
 	// Get the number directly without returning a Month object
 
 	/**
-	 * 
+	 *
 	 * @param {String} name month's name (capitlisation does not matter)
 	 * @param {Object} option
 	 * @param {Boolean} option.pad zero-pad the output, if needed; returns a string instead of a number
@@ -116,7 +116,7 @@ export default class Month {
 		return Month.newFromMonthName(monthname)[option.pad ? "paddedNumber" : "number"];
 	}
 	/**
-	 * 
+	 *
 	 * @param {String} shortname month's short name (capitlisation does not matter), e.g. "Jan", "FEB", "mar"
 	 * @param {Object} option
 	 * @param {Boolean} option.pad zero-pad the output, if needed; returns a string instead of a number

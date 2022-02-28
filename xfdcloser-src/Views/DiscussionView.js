@@ -257,7 +257,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 			return;
 		}
 		// Find first timestamp date
-		const firstDateMatch = /(\d{1,2} \w+ \d{4})(?: \d\d:\d\d )(?:\((?:CET|CEST)\))/.exec(discussionText);
+		const firstDateMatch = /(\d{1,2} \w{3} \d{4})(?: \d\d:\d\d )(?:\((?:CET|CEST)\))/.exec(discussionText);
 		const firstDateString = firstDateMatch && firstDateMatch[1];
 		if (firstDateString) {
 			firstDate = dateFromParts.apply(null, firstDateString.split(" ").reverse() );
@@ -273,7 +273,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 	// Check age (since last relist, or since transclusion)
 	const notTranscludedCorrectlyMatch = discussionText.match(/(?:Automated|Procedural) (?:comment|Note).*transcluded.*/i);
 	const notTranscludedCorrectlyComment = notTranscludedCorrectlyMatch && notTranscludedCorrectlyMatch[0];
-	const timestampPatt = /\d{1,2} \w+ \d{4} \d\d:\d\d \((?:CET|CEST)\)/;
+	const timestampPatt = /\d{1,2} \w{3} \d{4} \d\d:\d\d \((?:CET|CEST)\)/;
 	const listingTimestampMatch = (
 		lastRelist.match(timestampPatt) ||
 		notTranscludedCorrectlyComment && notTranscludedCorrectlyComment.match(timestampPatt) ||

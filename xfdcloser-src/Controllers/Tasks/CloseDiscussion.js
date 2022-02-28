@@ -6,7 +6,7 @@ import TaskItemController from "../TaskItemController";
 export default class CloseDiscussion extends TaskItemController {
 	constructor(model, widgets) {
 		super(model, widgets);
-		this.model.setName("Closing discussion");
+		this.model.setName("Nominatie sluiten");
 	}
 
 	/**
