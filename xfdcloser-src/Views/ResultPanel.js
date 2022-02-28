@@ -69,11 +69,11 @@ function ResultPanel( config, model ) {
 		this.copyButton.$element,
 		this.rationaleTextbox.$element
 	);
-	this.rationaleFieldset.addItems(
+	this.rationaleFieldset.addItems([
 		new OO.ui.FieldLayout( this.rationaleWidget, {
 			align:"top"
 		} )
-	);
+	]);
 
 	// Preview
 	this.previewFieldset = new OO.ui.FieldsetLayout({label: "Voorvertoning"});
@@ -83,11 +83,11 @@ function ResultPanel( config, model ) {
 		"border-radius":"5px",
 		"padding":"5px"
 	});
-	this.previewFieldset.addItems(
+	this.previewFieldset.addItems([
 		new OO.ui.FieldLayout( this.preview, {
 			align: "top"
 		})
-	);
+	]);
 
 	this.$element.append(
 		this.notesFieldset.$element,
