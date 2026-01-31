@@ -19,7 +19,7 @@ describe("OptionsItem", function() {
 			assert.strictEqual(model.name, "keep");
 		});
 		it("has label based on result", function() {
-			assert.strictEqual(model.label, "\"Keep\" result options");
+			assert.strictEqual(model.label, "\"Behouden\" opties");
 		});
 		it("has two actions", function() {
 			assert.strictEqual(model.actions.length, 2);
@@ -49,7 +49,7 @@ describe("OptionsItem", function() {
 			assert.strictEqual(model.name, "delete");
 		});
 		it("has label based on result", function() {
-			assert.strictEqual(model.label, "\"Delete\" result options");
+			assert.strictEqual(model.label, "\"Verwijder\" opties");
 		});
 		it("has three actions", function() {
 			assert.strictEqual(model.actions.length, 3);

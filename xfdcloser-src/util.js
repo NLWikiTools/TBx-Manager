@@ -165,6 +165,13 @@ const dateFromSigTimestamp = function(sigTimestamp) {
  * @returns {Date|NaN} Date object, or NaN if date could not be parsed
  */
 const dateFromSubpageName = function(subpageName) {
+	// Handle "Toegevoegd YYYYMMDD" format (Dutch Wikipedia)
+	const wrapperMatch = /Toegevoegd[ _](\d{4})(\d{2})(\d{2})/.exec(subpageName);
+	if (wrapperMatch) {
+		const [, year, month, day] = wrapperMatch;
+		return new Date(Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)));
+	}
+
 	const [year, monthName, day] = subpageName.split(" ");
 	return dateFromParts(year, monthName, day);
 };

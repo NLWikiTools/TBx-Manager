@@ -6,10 +6,10 @@ const resultsData = [
 	// Keep
 	{
 		name: "keep",
-		tag: "behouden",
+		tag: "Artikel behouden",
 		label: "Behouden",
+		allowSpeedy: false,
 		title: "Sluit beoordeling met resultaat \"behouden\"",
-		allowSpeedy: true,
 		venues: ["afd", "cfd", "ffd", "tfd"],
 		actions: ["updatePages", "noActions"]
 	},
@@ -17,7 +17,7 @@ const resultsData = [
 	// Delete
 	{
 		name: "delete",
-		tag: "verwijderd",
+		tag: "Artikel verwijderd",
 		label: "Verwijderen",
 		title: "Sluit beoordeling met resultaat \"verwijderen\"",
 		allowSpeedy: true,
@@ -29,7 +29,7 @@ const resultsData = [
 	// Redirect
 	{
 		name: "redirect",
-		tag: "doorverwezen",
+		tag: "Artikel doorverwezen",
 		label: "Doorverwijzen",
 		title: "Sluit beoordeling met resultaat \"doorverwijzing\"",
 		requireTarget: true,
@@ -42,7 +42,7 @@ const resultsData = [
 	// Rename
 	{
 		name: "rename",
-		tag: "hernoemd",
+		tag: "Artikel hernoemd",
 		label: "Hernoemen",
 		title: "Sluit beoordeling met resultaat \"hernoemen\"",
 		requireTarget: true,
@@ -126,6 +126,11 @@ const prefs = [{
 	sysopOnly: true,
 	type: "toggle",
 	default: false
+}, {
+	name: "reloadOnFinish",
+	label: "Herlaad pagina na afhandelen",
+	type: "toggle",
+	default: true
 }, {
 	name: "collapseWarnings",
 	label: "Groepeer waarschuwingen bij meer dan:",
