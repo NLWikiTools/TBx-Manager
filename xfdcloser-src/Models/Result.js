@@ -161,14 +161,25 @@ class Result {
 	}
 
 	/**
+	 * Client-side preview for immediate feedback
+	 */
+	get preview() {
+		return this.previewWikitext
+			.replace(/'''(.+?)'''/g, "<b>$1</b>")
+			.replace(/\[\[([^|\]]+?)\|([^\]]+?)\]\]/g, "<a href=\"/wiki/$1\" target=\"_blank\">$2</a>")
+			.replace(/\[\[([^|\]]+?)\]\]/g, "<a href=\"/wiki/$1\" target=\"_blank\">$1</a>");
+	}
+
+	/**
 	 * @param {String} previewWikitext
 	 */
 	get previewWikitext() {
 		const resultText = this.isMultimode ? this.resultSummary.trim() : this.singleModeResult.getResultText();
 		const resultWikitext = resultText ? `'''${resultText}'''` : "";
 		const targetWikitext = this.getFormattedTarget({prepend: " naar "});
-		const rationaleWikitext = this.getFormattedRationale("punctuated") || ".";
-		return `${resultWikitext}${targetWikitext}${rationaleWikitext}`;
+		const rationaleWikitext = this.getFormattedRationale("punctuated") || (resultText ? "." : "");
+		const separator = resultText ? " - " : "";
+		return `${resultWikitext}${targetWikitext}${separator}${rationaleWikitext}`;
 	}
 
 	/**

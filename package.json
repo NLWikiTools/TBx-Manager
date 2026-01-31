@@ -1,7 +1,7 @@
 {
   "title": "TBx-Manager",
   "name": "tbxmanager",
-  "version": "0.2.37",
+  "version": "0.3.1",
   "description": "Wikipedia gadget that helps assess pages for WikiProjects",
   "homepage": "https://github.com/NLWikiTools/TBx-Manager",
   "browser": "index.js",
@@ -69,5 +69,8 @@
     "stylelint": "^14.5.0",
     "stylelint-config-standard": "^25.0.0",
     "uglify-js": "^3.8.0"
+  },
+  "dependencies": {
+    "i": "^0.3.7"
   }
 }

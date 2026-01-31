@@ -68,8 +68,7 @@ import DiscussionView from "./Views/DiscussionView";
 		const showHide = $("#mw-content-text " + config.xfd.html.head).length > 1 && ShowHideTag.initialiseNewTag();
 		
 		// Set up discussion object for each discussion
-		$(config.xfd.html.head + " > span.mw-headline")
-			.not(".XFDcloser-ignore")
+		$("#mw-content-text " + config.xfd.html.head)
 			.each(function(index) {
 				try {
 					var discussionView = DiscussionView.newFromHeadline({

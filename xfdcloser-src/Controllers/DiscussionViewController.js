@@ -1,8 +1,9 @@
 import { $, mw, OO } from "../../globals";
 import API from "../api";
-import { dateFromSubpageName, windowOffsetTop } from "../util"; 
+import { dateFromSubpageName, windowOffsetTop, encodeForWikilinkFragment } from "../util"; 
 import MainWindowModel from "../Models/MainWindowModel";
 import windowSetManager from "../windowSetManager";
+import * as prefs from "../prefs";
 
 // <nowiki>
 class DiscussionViewController {
@@ -42,8 +43,10 @@ class DiscussionViewController {
 				mw.Title.exist.set(talkpageTitle.getPrefixedDb(), !!page.talkid);
 			}
 		}));
-		const nominationDatePromise = ( this.model.venue.type !== "afd" && this.model.venue.type !== "mfd" )
-			? $.Deferred().resolve( dateFromSubpageName(this.model.discussionSubpageName) )
+		const dateFromTitle = dateFromSubpageName(this.model.discussionSubpageName);
+
+		const nominationDatePromise = ( !isNaN(dateFromTitle) )
+			? $.Deferred().resolve( dateFromTitle )
 			: API.get({
 				action: "query",
 				format: "json",
@@ -90,6 +93,10 @@ class DiscussionViewController {
 		});
 		windowInstance.closed.then(winData => {
 			this.model.setClosedWindowData(winData);
+			if ( winData && winData.success && prefs.get("reloadOnFinish") ) {
+				window.location.hash = encodeForWikilinkFragment(this.model.sectionHeader);
+				window.location.reload();
+			}
 		});
 		this.model.setWindowOpened(type);
 	}
@@ -108,6 +115,10 @@ class DiscussionViewController {
 		});
 		windowInstance.closed.then(winData => {
 			this.model.setClosedWindowData(winData);
+			if ( winData && winData.success && prefs.get("reloadOnFinish") ) {
+				window.location.hash = encodeForWikilinkFragment(this.model.sectionHeader);
+				window.location.reload();
+			}
 		});
 		this.model.setWindowOpened("close");
 		windowModel.result.singleModeResult.setSelectedResultName(quickCloseResult.replace("quick", "").toLowerCase());

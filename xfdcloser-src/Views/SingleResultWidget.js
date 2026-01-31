@@ -19,8 +19,8 @@ function SingleResultWidget(model, config) {
 
 	this.buttonSelect = new OO.ui.ButtonSelectWidget();
 	this.speedyOption = new OO.ui.CheckboxMultioptionWidget( {
-		data: {name:"speedy", prefix: "direct "},
-		label: "Direct"
+		data: {name:"speedy", prefix: "nuweg "},
+		label: "Nuweg"
 	} );
 	this.softOption = new OO.ui.CheckboxMultioptionWidget( {
 		data: {name:"soft", prefix: "soft "},

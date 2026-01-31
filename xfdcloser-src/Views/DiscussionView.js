@@ -34,7 +34,6 @@ function DiscussionView(model) {
 		classes: model.classes,
 	} );
 	this.model = model;
-
 	this.$headlineSpan = model.$headlineSpan;
 
 	this.closeButton = new OO.ui.ButtonWidget({
@@ -116,16 +115,16 @@ DiscussionView.prototype.onQuickCloseChoose = function(menuOption) {
  * @param {Boolean} params.userIsSysop
  */
 DiscussionView.newFromHeadline = function({headingIndex, context, venue, currentPageName, userIsSysop}) {
-	const id = "XFDC" + headingIndex,
+	var id = "XFDC" + headingIndex,
 		$headlineSpan = $(context),
-		$heading = $headlineSpan.parent();
+		$heading = $headlineSpan.parent().hasClass("mw-heading") ? $headlineSpan.parent() : $headlineSpan;
 
 	// Get section header
 	$(".mw-headline-number", context).prependTo($heading); // Fix for "Auto-number headings" preference
-	const sectionHeader = $headlineSpan.text().trim();
+	var sectionHeader = $headlineSpan.text().trim();
 
 	// Check if already closed. Closed AfDs and MfDs have the box above the heading; others have it below.
-	if (/(afd|mfd)/.test(venue.type) && $heading.parent().attr("class") && $heading.parent().attr("class").includes("xfd-closed")) {
+	if (/(afd|mfd)/.test(venue.type) && $heading.prev().attr("class") && $heading.prev().attr("class").includes("xfd-closed")) {
 		// Skip
 		return;
 	} else if (!/(afd|mfd)/.test(venue.type) && $heading.next().attr("class")) {
@@ -176,7 +175,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 
 	// Find all nodes that are part of this discussion (i.e. excluding subsequent closed discussions)
 	$("table.mw-collapsible").has("div.xfd-closed").addClass("xfd-closed");	// Fix for closed discussion within a collapsed table (e.g. MfD)
-	const $discussionNodes = $heading.nextUntil(venue.html.head + ", div.xfd-closed, table.xfd-closed");
+	const $discussionNodes = $heading.nextUntil(venue.html.head + ", .mw-heading, div.xfd-closed, table.xfd-closed");
 	$discussionNodes.addClass(`${id}-discussion-node`);
 
 	// Get list of nominated pages. Also the proposed action for CfD.
@@ -222,14 +221,30 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 			.map(function () { return mw.Title.newFromText($(this).text()); })
 			.get();
 	} else {
-		// AFD, FFD, TFD: nominated page links inside span with classes plainlinks, nourlexpansion
-		pages = $discussionNodes
-			.next("div.tbp-links")
-			.find(venue.html.listitem + " > span.tbp-extra-links > span.tbxm")
-			.children("a")
-			.filter(":first-child")
-			.map(function () { return mw.Title.newFromText($(this).text()); })
-			.get();
+		// AFD, FFD, TFD: Look for links inside .tbp-links (template {{tbp-links}})
+		const $tbpLinks = $discussionNodes.filter(".tbp-links").add($discussionNodes.find(".tbp-links")).add($discussionNodes.next(".tbp-links"));
+		
+		const uniquePages = new Map();
+		// Look specifically for .tbxm class which marks the page link, avoiding utility links like 'Overleg'
+		$tbpLinks.find(".tbxm a").not(".external").each(function() {
+			const $link = $(this);
+			// Prefer title attribute, fall back to text
+			const titleAttr = $link.attr("title");
+			const text = $link.text().trim();
+			
+			const title = mw.Title.newFromText(titleAttr || text);
+			if (!title) return;
+
+			// Skip special pages
+			if (title.getNamespaceId() === -1) return;
+
+			const prefixed = title.getPrefixedText();
+			if (!uniquePages.has(prefixed)) {
+				uniquePages.set(prefixed, title);
+			}
+		});
+		
+		pages = Array.from(uniquePages.values());
 	}
 
 	// Sanity check that page names were actually found
@@ -286,7 +301,7 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 		const millisecondsSinceListing = new Date() - listingTimestampDate;
 		const discussionRuntimeDays = 14;
 		const discussionRuntimeMilliseconds = discussionRuntimeDays * 24 * 60 * 60 * 1000;
-		isOld = millisecondsSinceListing > discussionRuntimeMilliseconds;
+		isOld = millisecondsSinceListing >= discussionRuntimeMilliseconds;
 		classes.push(isOld ? "xfdc-old" : "xfdc-notOld");
 	}
 

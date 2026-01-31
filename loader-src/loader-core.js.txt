@@ -21,7 +21,7 @@
 	}
 
 	// Check if on an XfD page
-	var xfdpage_regex = /(Te_beoordelen_pagina's|Te_beoordelen_afbeeldingen|Te_beoordelen_categorieën$)/;
+	var xfdpage_regex = /(Te_beoordelen_pagina's|Te_beoordelen_sjablonen|Te_beoordelen_categorieën$)/;
 	var isXfdPage = xfdpage_regex.test(mw.config.get("wgPageName"));
 
 	// Load for XfD pages as well as unlinkable pages 

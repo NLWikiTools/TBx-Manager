@@ -113,9 +113,10 @@ class ResultItem {
 			return "";
 		} else if ( this.selectedResult.name === "custom") {
 			return this.customResultText.trim();
+		} else if ( this.isSpeedy() ) {
+			return "Nuweg";
 		}
 		const prefix = (
-			( this.isSpeedy() && "direct " ) ||
 			( this.isSoft() && "soft " ) ||
 			( this.isDeleteFirst() && "verwijderen en ")
 		);
