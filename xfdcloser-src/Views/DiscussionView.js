@@ -175,7 +175,8 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 
 	// Find all nodes that are part of this discussion (i.e. excluding subsequent closed discussions)
 	$("table.mw-collapsible").has("div.xfd-closed").addClass("xfd-closed");	// Fix for closed discussion within a collapsed table (e.g. MfD)
-	const $discussionNodes = $heading.nextUntil(venue.html.head + ", .mw-heading, div.xfd-closed, table.xfd-closed");
+	const $discussionNodes = $heading.nextUntil(venue.html.head + ", .mw-heading, div.xfd-closed, table.xfd-closed, .sessie-uitgevoerd")
+		.not(".sessie-uitgevoerd");
 	$discussionNodes.addClass(`${id}-discussion-node`);
 
 	// Get list of nominated pages. Also the proposed action for CfD.
@@ -228,6 +229,9 @@ DiscussionView.newFromHeadline = function({headingIndex, context, venue, current
 		// Look specifically for .tbxm class which marks the page link, avoiding utility links like 'Overleg'
 		$tbpLinks.find(".tbxm a").not(".external").each(function() {
 			const $link = $(this);
+			// Ignore if link is inside a handled/closed section
+			if ($link.closest(".sessie-uitgevoerd, .xfd-closed").length > 0) return;
+
 			// Prefer title attribute, fall back to text
 			const titleAttr = $link.attr("title");
 			const text = $link.text().trim();
