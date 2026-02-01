@@ -56,9 +56,19 @@ export default class CloseDiscussion extends TaskItemController {
 			.replace(/__RESULT__/, this.model.result.getResultText() || "&thinsp;")
 			.replace(/__TO_TARGET__/, this.model.result.getFormattedTarget({prepend: " naar "}))
 			.replace(/__RATIONALE__/, this.model.result.getFormattedRationale("punctuated") || ".");
-		const section_content = page.content;
+		let section_content = page.content.trim();
+		let trailing_su = "";
+		// Check for {{su}} or {{sessie uitgevoerd}} at the very end of the section content
+		// This happens if the next section is already handled
+		const suPattern = /({{\s*(?:[Ss]u|[Ss]essie uitgevoerd)\s*}})\s*$/;
+		const match = section_content.match(suPattern);
+		if (match) {
+			trailing_su = "\n" + match[1];
+			section_content = section_content.replace(suPattern, "").trim();
+		}
+
 		const updated_top = xfd_close_top;
-		const updated_section = updated_top + "\n" + section_content.trim() + "\n" + xfd_close_bottom;
+		const updated_section = updated_top + "\n" + section_content + "\n" + xfd_close_bottom + trailing_su;
 
 		return {
 			section: this.model.discussion.sectionNumber,
