@@ -1,4 +1,4 @@
-import { $, OO } from "../../globals";
+import { OO } from "../../globals";
 import * as prefs from "../prefs";
 // <nowiki>
 
@@ -62,7 +62,7 @@ export default class PrefsWindowController {
 		const DEFAULT_HEIGHT = 200; //px. Minimum height for window body at all times.
 		const SAFETY_MARGIN = 1; //px. Additional height to make sure content fits in window without scrolling.
 		const panelHeight = this.window.prefsPanel.$element.get(0).scrollHeight || 0;
-		const errorsHeight = $(".oo-ui-processDialog-errors").get(0).scrollHeight || 0;
+		const errorsHeight = this.window.$errors.get(0).scrollHeight || 0;
 		// Must be at least the default height, or the current panel height, or the height needed for any errors
 		return Math.max(
 			DEFAULT_HEIGHT,
