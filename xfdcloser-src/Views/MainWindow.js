@@ -152,7 +152,7 @@ MainWindow.prototype.initialize = function () {
 
 // Override the getBodyHeight() method to specify a custom height
 MainWindow.prototype.getBodyHeight = function () {
-	return $(".oo-ui-processDialog-errors").get(0).scrollHeight || this.model.height;
+	return this.$errors.get(0).scrollHeight || this.model.height;
 };
 
 // Use getSetupProcess() to set up the window with data passed to it at the time
