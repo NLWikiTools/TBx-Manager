@@ -4,3 +4,7 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    ignore:
+      # Babel 8 vereist o.a. vervanging van babelify en ESLint 9; pas updaten bij volledige migratie
+      - dependency-name: "@babel/*"
+        update-types: ["version-update:semver-major"]
