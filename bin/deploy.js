@@ -89,7 +89,7 @@ if (isRegulier) {
 }
 
 console.log(`... inloggen als ${username}  ...`);
-api.loginGetToken().then(() => {
+api.login().then(() => {
 	prompt("> Druk op [Enter] om het deployen te starten of druk op [Ctrl + C] om af te breken");
 	console.log("--- deployment gestart ---");
 	const editPromises = deployments.map(deployment => {
