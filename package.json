@@ -6,9 +6,9 @@
   "homepage": "https://github.com/NLWikiTools/TBx-Manager",
   "browser": "index.js",
   "scripts": {
-    "test": "npm run globals:node && mocha --require @babel/register --reporter list && npm run globals:window",
+    "test": "npm run globals:node && mocha --node-option no-experimental-detect-module --require @babel/register --reporter list && npm run globals:window",
     "test:all": "node bin/testall && npm run test",
-    "test:delay": "mocha --delay --require @babel/register --reporter list",
+    "test:delay": "mocha --delay --node-option no-experimental-detect-module --require @babel/register --reporter list",
     "lint:es5": "jshint \"dist/loader-dev.js\" \"dist/loader-gadget.js\"",
     "lint:es5:dev": "jshint \"dist/loader-dev.js\"",
     "lint:css": "stylelint \"styles-src/**/*.css\" --fix",
@@ -52,14 +52,14 @@
     "@babel/preset-env": "^7.9.0",
     "@babel/register": "^7.9.0",
     "babelify": "^10.0.0",
-    "browserify": "^16.5.0",
+    "browserify": "17.0.1",
     "concat": "^1.0.3",
     "concat-cli": "^4.0.0",
     "core-js": "^3.8.3",
     "eslint": "^8.9.0",
     "jquery": "^3.5.1",
     "jsdom": "^30.1.3",
-    "jshint": "^2.13.4",
+    "jshint": "^2.13.6",
     "mediawiki-title": "^0.7.2",
     "mocha": "^12.0.3",
     "mwn": "^3.0.3",
@@ -72,5 +72,13 @@
   },
   "dependencies": {
     "i": "^0.3.7"
+  },
+  "allowScripts": {
+    "core-js": false
+  },
+  "overrides": {
+    "lodash": "^4.18.1",
+    "minimatch@<3.1.5": "^3.1.5",
+    "sha.js": "^2.4.12"
   }
 }
