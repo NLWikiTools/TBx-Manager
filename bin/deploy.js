@@ -37,7 +37,7 @@
  * - Changes to gadget definitions need to be done manually
  */
 const fs = require("fs");
-const {mwn} = require("mwn");
+const {Mwn} = require("mwn");
 const {execSync} = require("child_process");
 const prompt = require("prompt-sync")({sigint: true});
 const {username, password, betausername, betapassword} = require("./credentials.json");
@@ -75,13 +75,13 @@ const deployments = [
 
 let api;
 if (isRegulier) {
-	api = new mwn({
+	api = new Mwn({
 		apiUrl: `https://${wiki}.wikipedia.org/w/api.php`,
 		username: username,
 		password: password
 	});
 } else {
-	api = new mwn({
+	api = new Mwn({
 		apiUrl: `https://${wiki}.wikipedia.beta.wmcloud.org/w/api.php`,
 		username: betausername,
 		password: betapassword
